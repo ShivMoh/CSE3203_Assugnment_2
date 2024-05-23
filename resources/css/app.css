@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+:root{
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+  color: #6A4200;
+  background-color: #FBFCF7;
+}
+
+/* Search bar global styling */
+h1.title{
+  letter-spacing: -0.03em;
+  font-size: 48px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: -4px;
+}
+
+hr{
+  color: #6A4200;
+  margin: 24px 0;
+}
+
+.ghost-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  padding: 8px;
+  border-radius: 3px;
+  border: solid 1px #6A4200;
+  height: 48px;
+  width: 48px;
+}
+
+.search-bar{
+  padding: 8px;
+  border-radius: 3px;
+  border: solid 1px #6A4200;
+  margin-right: 8px;
+  height: 48px;
+
+}
+
+.search-bottom{
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-container{
+  display: flex;
+  justify-content: left;
+}
+
+.add-more{
+  height: 45px;
+  background-color: #6A4200;
+  
+  color: white;
+  text-transform: uppercase;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px;
+
+  border: none;
+  border-radius: 30px;
+  padding: 8px 24px;
+
+  box-shadow: 0 0 45px 3px rgba(0, 0, 0, 0.25);
+}
