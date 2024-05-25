@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,5 @@ Route::post('/detail', function () {
 Route::get('/assignment-add', function () {
     return view('/assignments/assignment-add');
 });
+
+Route::get('/group-reports', [GroupController::class, 'get_all_groups']);
