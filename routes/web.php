@@ -30,6 +30,12 @@ Route::get('/assignment-add', function () {
     return view('/assignments/assignment-add');
 });
 
-Route::get('/group-reports', [GroupController::class, 'view_groups']);
-Route::get('/edit-grades', [GroupController::class, 'edit_grades']);
-Route::post('/update-grades', [GroupController::class, 'update_grades']);
+Route::get('/group-reports', [GroupController::class, 'view_groups'])->name('group-reports');
+Route::post('/group-reports', [GroupController::class, 'view_groups'])->name('group-reports');
+
+Route::middleware('clear.edit.grades')->group(function () {
+    Route::post('/edit-grades', [GroupController::class, 'edit_grades'])->name('edit-grades');
+    Route::get('/edit-grades', [GroupController::class, 'edit_grades'])->name('edit-grades');
+});
+Route::post('/update-grades', [GroupController::class, 'update_grades'])->name('update-grades');
+Route::post('/update-comment', [GroupController::class, 'update_comment'])->name('update-comment');

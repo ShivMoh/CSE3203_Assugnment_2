@@ -19,9 +19,10 @@
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </form>
-                <form  action="" method="POST">
+                <form  action="/edit-grades" method="POST">
                     @csrf
                     <!-- delete -->
+                    <input type="hidden" name="group_id" value="{{$group->id}}">
                     <button type="submit" class="ghost-btn">
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>

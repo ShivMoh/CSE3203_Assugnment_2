@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
                 'id' => Str::uuid(),
                 'title' => 'Midterm Exam',
                 'description' => 'Midterm examination for CS101',
-                'total_marks' => 100,
+                'total_marks' => 50,
                 'course_weight' => 0.3,
                 'course_id' => DB::table('courses')->where('code', 'CS101')->first()->id,
                 'category_id' => DB::table('categories')->where('name', 'Exams')->first()->id,
@@ -140,7 +140,13 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'title' => 'Section 1',
-                'marks_allocated' => 50,
+                'marks_allocated' => 30,
+                'assessment_id' => DB::table('assessments')->where('title', 'Midterm Exam')->first()->id,
+            ],
+            [
+                'id' => Str::uuid(),
+                'title' => 'Section 2',
+                'marks_allocated' => 20,
                 'assessment_id' => DB::table('assessments')->where('title', 'Midterm Exam')->first()->id,
             ],
             [
@@ -156,7 +162,14 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'name' => "Section 1",
-                'marks_attained' => 45,
+                'marks_attained' => 30,
+                'grade_id' => DB::table('grades')->where('marks_attained', 85)->first()->id,
+                'section_id' => DB::table('sections')->where('title', 'Section 1')->first()->id,
+            ],
+            [
+                'id' => Str::uuid(),
+                'name' => 'Section 2',
+                'marks_attained' => 20,
                 'grade_id' => DB::table('grades')->where('marks_attained', 85)->first()->id,
                 'section_id' => DB::table('sections')->where('title', 'Section 1')->first()->id,
             ],

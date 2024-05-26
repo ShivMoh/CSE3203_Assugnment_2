@@ -1,5 +1,4 @@
 @vite(['resources/css/app.css','resources/css/groups/grade.css'])
-@vite(['resources/js/app.js'])
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -12,33 +11,33 @@
         <div class="row">
             <h3>{{$gradeSection->name}}</h3>
             <div class="section-preview-form">
-                <form  action="" method="POST">
-                    @csrf
-                    <!-- delete -->
-                    <button type="submit" class="ghost-btn">
-                        <i class="fa fa-solid fa-lg fa-x" style="color:#ffffff; width: 10px; height: 10px;"></i>                        
-                    </button>
-                </form>
+              
             </div>            
         </div>
 
         <hr>
         <div class="row">
-            <h3>Total</h3>
-            <h3>{{$grade->marks_attained}}</h3>
+            <h3>Marks allocated</h3>
+            <h3>{{$section->marks_allocated}}</h3>
         </div>
         <div class="row">
             <h3>Marks</h3>
 
-            <form action="/update-grades" method="post">
+            <form action={{ route('update-grades') }} method="POST">
                 @csrf
                 <input onchange="this.form.submit()" type="text" name="marks" id="marks" class="marks" placeholder="Enter marks here" value="{{$gradeSection->marks_attained}}">
+                @if ($errors->has('marks'))
+                    <span class="error">Marks is a required field</span>
+                @endif
+                @if ($errors->has('marks_overflow'))
+                    <span class="error">{{ $errors->first('marks_overflow')}}</span>
+                @endif
                 <input type="hidden" name="section_id" value="{{$gradeSection->id}}">
                 <input type="hidden" name="grade_id" value="{{$grade->id}}">
+                <input type="hidden" name="marks_allocated" value="{{$section->marks_allocated}}">
+
             </form>
         </div>
-        {{$grade->id}}
-
 
     </div>
 </body>
