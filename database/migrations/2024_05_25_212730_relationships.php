@@ -85,6 +85,10 @@ return new class extends Migration
             $table->dropForeign(['assessment_id']);
         });
 
+        Schema::table('sections', function(Blueprint $table ) {
+            $table->dropForeign(['assessment_id']);
+        });
+
         Schema::table('comments', function(Blueprint $table ) {
             $table->dropForeign(['grade_id']);
         });

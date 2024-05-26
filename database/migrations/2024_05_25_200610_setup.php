@@ -34,8 +34,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('title');
             $table->string('description');
-            $table->integer('total_marks');
-            $table->integer('course_weight');
+            $table->float('total_marks');
+            $table->float('course_weight');
         });
 
         Schema::create('categories', function(BLueprint $table) {
@@ -70,13 +70,13 @@ return new class extends Migration
         Schema::create('sections', function(Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
-            $table->integer('marks_allocated');
+            $table->float('marks_allocated');
         });
 
 
         Schema::create('grade_sections', function(Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->integer('marks_attained');
+            $table->float('marks_attained');
         });
 
         Schema::create('comments', function(Blueprint $table) {

@@ -30,4 +30,4 @@ Route::get('/assignment-add', function () {
     return view('/assignments/assignment-add');
 });
 
-Route::get('/group-reports', [GroupController::class, 'get_all_groups']);
+Route::get('/group-reports', [GroupController::class, 'view_groups']);
