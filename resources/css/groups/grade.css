@@ -1,0 +1,113 @@
+.main-content{
+    /* margin accounts for navbar*/
+    margin-top: 116px;
+    padding: 96px 192px 96px 192px;
+}
+
+.comment-container textarea {
+    width: 100%;
+    padding: 20px;
+    border: solid #6A4200 2px;
+}
+
+.group-contribution-container {
+    margin-left: 40px;
+}
+.row{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.marks {
+    height: 30px;
+}
+h1.heading{
+    letter-spacing: -0.03em;
+    font-size: 48px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: -4px;
+  }
+
+  .details p{
+    margin-top: 24px;
+    font-weight: 500;
+  }
+
+  .sections{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; 
+  }
+
+  .sections .ghost-btn{
+    margin-left: 8px;
+    border-radius: 50px;
+  }
+
+  .parts{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .section-parts{
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    
+  }
+
+  .section-add{
+    width: 245px;
+
+    background-color: #6A4200;
+    color: white;
+
+    margin: 16px 8px;
+    padding: 24px;
+    border-radius: 8px;
+    }
+
+    .section-add .add-more{
+        border: solid 1px white;
+    }
+    .btns{
+        display: flex;
+        justify-content: center;
+    }
+    .group-btns{
+        margin: 48px 0;
+        width: 40%;
+    }
+
+.assignment-section-body{
+    width: 245px;
+
+    background-color: #6A4200;
+    color: white;
+
+    margin: 16px 8px;
+    padding: 24px;
+    border-radius: 8px;
+}
+
+.assignment-section-body h3{
+    font-size: 16px;
+    font-weight: 300;
+}
+.assignment-section-body hr{
+    color: #ffffff80;
+}
+
+.section-preview-form{
+    display: flex;
+    align-items: center;
+}

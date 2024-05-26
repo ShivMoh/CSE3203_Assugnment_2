@@ -1,0 +1,78 @@
+.main-content{
+    /* margin accounts for navbar*/
+    margin-top: 116px;
+    padding: 96px 192px 96px 192px;
+}
+
+.row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fa {
+    color: #6A4200;
+}
+
+.button-container{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.button-container button{
+    margin-left: 8px;
+}
+
+/* Assignment Preview */
+.group-preview-body{
+    background-color: #ECDCAB;
+    color: #6A4200;
+
+    border-radius: 100px;
+    box-shadow: 0 0 45px 3px rgba(0, 0, 0, 0.1);
+
+    padding: 24px 64px;
+    margin-top: 24px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.line {
+    border: solid black 2px;
+}
+
+.inner-container {
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.buttons {
+    margin-top: 10px;
+}
+
+.group-expanded {
+    display: none;
+    flex-direction: column;
+}
+
+.group-member-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+}
+
+.buttons .ghost-btn{
+    margin-left: 8px;
+    border-radius: 50px;
+}
+
