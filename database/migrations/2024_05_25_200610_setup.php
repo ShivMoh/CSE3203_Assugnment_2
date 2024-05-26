@@ -28,6 +28,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('code');
+            $table->timestamps();
+
         });
         
         Schema::create('assessments', function(Blueprint $table) {
@@ -36,22 +38,30 @@ return new class extends Migration
             $table->string('description');
             $table->float('total_marks');
             $table->float('course_weight');
+            $table->timestamps();
+
         });
 
         Schema::create('categories', function(BLueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
+            $table->timestamps();
+
         });
 
         
         Schema::create('groups', function(BLueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
+            $table->timestamps();
+
         });
 
         Schema::create('contributions', function(BLueprint $table) {
             $table->uuid('id')->primary();
             $table->float('percentage');
+            $table->timestamps();
+
         });
 
         Schema::create('students', function(BLueprint $table) {
@@ -59,29 +69,40 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('usi');
+            $table->timestamps();
+
         });
 
         Schema::create('grades', function(Blueprint $table) {
             $table->uuid('id')->primary();
             $table->float('marks_attained');
             $table->string('letter_grade');
+            $table->timestamps();
+
         });
 
         Schema::create('sections', function(Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
             $table->float('marks_allocated');
+            $table->timestamps();
+
         });
 
 
         Schema::create('grade_sections', function(Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('name');
             $table->float('marks_attained');
+            $table->timestamps();
+
         });
 
         Schema::create('comments', function(Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('comment');
+            $table->timestamps();
+
         });
     }
 

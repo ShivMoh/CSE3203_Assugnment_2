@@ -31,3 +31,5 @@ Route::get('/assignment-add', function () {
 });
 
 Route::get('/group-reports', [GroupController::class, 'view_groups']);
+Route::get('/edit-grades', [GroupController::class, 'edit_grades']);
+Route::post('/update-grades', [GroupController::class, 'update_grades']);

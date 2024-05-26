@@ -155,12 +155,14 @@ class DatabaseSeeder extends Seeder
         DB::table('grade_sections')->insert([
             [
                 'id' => Str::uuid(),
+                'name' => "Section 1",
                 'marks_attained' => 45,
                 'grade_id' => DB::table('grades')->where('marks_attained', 85)->first()->id,
                 'section_id' => DB::table('sections')->where('title', 'Section 1')->first()->id,
             ],
             [
                 'id' => Str::uuid(),
+                'name' => "Section 1",
                 'marks_attained' => 50,
                 'grade_id' => DB::table('grades')->where('marks_attained', 90)->first()->id,
                 'section_id' => DB::table('sections')->where('title', 'Section 2')->first()->id,
