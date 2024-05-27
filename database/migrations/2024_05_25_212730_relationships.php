@@ -19,53 +19,51 @@ return new class extends Migration
             $table->uuid('course_id');
             $table->uuid('category_id');
             
-            $table->foreign('course_id')->references('id')->on('courses');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete("cascade");
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete("cascade");
         });
         
 
         Schema::table('sections', function(Blueprint $table ) {
             $table->uuid('assessment_id');
             
-            $table->foreign('assessment_id')->references('id')->on('assessments');
+            $table->foreign('assessment_id')->references('id')->on('assessments')->onDelete("cascade");
         });
 
         Schema::table('contributions', function(Blueprint $table ) {
             $table->uuid('group_id');
             $table->uuid('student_id');
             
-            $table->foreign('group_id')->references('id')->on('groups');
-            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete("cascade");
+            $table->foreign('student_id')->references('id')->on('students')->onDelete("cascade");
 
         });
 
         Schema::table('groups', function(Blueprint $table ) {
             $table->uuid('grade_id');
 
-            $table->foreign('grade_id')->references('id')->on('grades');
+            $table->foreign('grade_id')->references('id')->on('grades')->onDelete("cascade");
         });
 
         Schema::table('grades', function(Blueprint $table ) {
             $table->uuid('assessment_id');
 
-            $table->foreign('assessment_id')->references('id')->on('assessments');
+            $table->foreign('assessment_id')->references('id')->on('assessments')->onDelete("cascade");
         });
         
         Schema::table('grade_sections', function(Blueprint $table ) {
             $table->uuid('grade_id');
             $table->uuid('section_id');
 
-            $table->foreign('grade_id')->references('id')->on('grades');
-            $table->foreign('section_id')->references('id')->on('sections');
+            $table->foreign('grade_id')->references('id')->on('grades')->onDelete("cascade");
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete("cascade");
 
         });
         
-
-
         Schema::table('comments', function(Blueprint $table ) {
             $table->uuid('grade_id');
 
-            $table->foreign('grade_id')->references('id')->on('grades');
+            $table->foreign('grade_id')->references('id')->on('grades')->onDelete("cascade");
         });
     }
 

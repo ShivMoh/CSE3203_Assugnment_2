@@ -15,8 +15,8 @@
                 <form  action="" method="POST">
                     @csrf
                     <!-- Forward to group detail -->
-                    <button type="button" class="ghost-btn" onclick="expand(@php echo $index; @endphp)">
-                        <i class="fa-solid fa-arrow-right"></i>
+                    <button type="button" class="ghost-btn toggle-button" onclick="expand(@php echo $index; @endphp)">
+                        <i class="fa-solid fa-arrow-down"></i>
                     </button>
                 </form>
                 <form  action="/edit-grades" method="POST">
@@ -27,9 +27,10 @@
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </form>
-                <form  action="" method="POST">
+                <form  action="/delete-group" method="POST">
                     @csrf
                     <!-- delete -->
+                    <input type="hidden" name="group_id" value="{{$group->id}}">
                     <button type="submit" class="ghost-btn">
                         <i class="fa fa-solid fa-lg fa-x"></i>                        
                     </button>

@@ -26,19 +26,22 @@
             <form action={{ route('update-grades') }} method="POST">
                 @csrf
                 <input onchange="this.form.submit()" type="text" name="marks" id="marks" class="marks" placeholder="Enter marks here" value="{{$gradeSection->marks_attained}}">
-                @if ($errors->has('marks'))
-                    <span class="error">Marks is a required field</span>
-                @endif
-                @if ($errors->has('marks_overflow'))
-                    <span class="error">{{ $errors->first('marks_overflow')}}</span>
-                @endif
+            
                 <input type="hidden" name="section_id" value="{{$gradeSection->id}}">
                 <input type="hidden" name="grade_id" value="{{$grade->id}}">
                 <input type="hidden" name="marks_allocated" value="{{$section->marks_allocated}}">
 
             </form>
-        </div>
 
+        </div>
+        <div class="row">
+            @if ($errors->has('marks'))
+                <span class="error">Marks is a required field</span>
+            @endif
+            @if ($errors->has('marks_overflow'))
+                <span class="error">{{ $errors->first('marks_overflow')}}</span>
+            @endif
+        </div>
     </div>
 </body>
 
