@@ -59,4 +59,17 @@ class AuthController extends Controller
         ]);
     }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        $response = redirect('/login');
+        $response->headers->set('Cache-Control', 'nocache, no-store, max-age=0, must-revalidate');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT');
+
+        return $response;
+    }
 }
