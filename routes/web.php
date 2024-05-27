@@ -38,6 +38,10 @@ Route::get('/assignment-add', function () {
     return view('/assignments/assignment-add');
 });
 
+Route::get('/courses', function () {
+    return view('/courses');
+});
+
 Route::get('/group-reports', [GroupController::class, 'view_groups'])->name('group-reports');
 Route::post('/group-reports', [GroupController::class, 'view_groups'])->name('group-reports');
 
