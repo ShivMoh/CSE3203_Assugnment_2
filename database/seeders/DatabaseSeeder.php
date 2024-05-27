@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,19 +15,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('users')->insert([
+            [
+                'id' => "101754e0-1748-4c33-8fe6-94f9c64babdb",
+                'name' => 'guy',
+                'email' => 'guy@email.com',
+                'password' => Hash::make('verystrongpassword')
+            ]
+        ]);
+
         DB::table('courses')->insert([
             [
                 'id' => Str::uuid(),
                 'name' => 'Introduction to Programming',
                 'code' => 'CS101',
+                'user_id' => '101754e0-1748-4c33-8fe6-94f9c64babdb'
+
             ],
             [
                 'id' => Str::uuid(),
                 'name' => 'Database Systems',
                 'code' => 'CS102',
+                'user_id' => '101754e0-1748-4c33-8fe6-94f9c64babdb'
             ],
         ]);
 
+   
         // Seed Categories
         DB::table('categories')->insert([
             [

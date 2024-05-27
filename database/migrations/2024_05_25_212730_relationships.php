@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('courses', function(Blueprint $table ) {
+        Schema::table('courses', function(Blueprint $table ) {
+            $table->uuid('user_id');
 
-        // });
+            $table->foreign('user_id')->references('id')->on('users')->onDelete("cascade");
+
+        });
 
         Schema::table('assessments', function(Blueprint $table ) {
             $table->uuid('course_id');
