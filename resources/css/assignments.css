@@ -137,7 +137,9 @@
     display: flex;
     align-items: center;
 }
-
+#file-input {
+    display: none;
+}
 
 /* Assignment Add */
 .assignment-add-form{
@@ -167,7 +169,8 @@
 }
 
 .assignment-add-form .form-group input,
-.assignment-add-form .form-group textarea {
+.assignment-add-form .form-group textarea,
+.assignment-add-form .form-group select {
     width: 100%; 
 
     border: solid 1px #6A4200;
@@ -185,6 +188,7 @@
 /* Ensure text content aligns to the left */
 .assignment-add-form .form-group label,
 .assignment-add-form .form-group input,
-.assignment-add-form .form-group textarea {
+.assignment-add-form .form-group textarea,
+.assignment-add-form .form-group select {
     text-align: left;
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssessmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\AuthController;
@@ -25,18 +26,17 @@ Route::get('/', function () {
 Route::get('/test', function () {
     return view('test');
 });
-Route::get('/assignments', function () {
-    return view('/assignments/assignment');
-});
-Route::post('/assignments', function () {
-    return view('/assignments/assignment');
-});
+Route::get('/assignments', [AssessmentController::class, 'index'])->name('assignments');
+Route::post('/assignments', [AssessmentController::class, 'index']);
 Route::post('/detail', function () {
     return view('/assignments/assignment-details');
 });
-Route::get('/assignment-add', function () {
-    return view('/assignments/assignment-add');
+Route::get('/detail', function () {
+    return view('/assignments/assignment-details');
 });
+Route::get('/assignment-add', [AssessmentController::class, 'viewAdd']);
+Route::post('/assignment-add', [AssessmentController::class, 'addAssessment']);
+
 
 Route::get('/courses', function () {
     return view('/courses');

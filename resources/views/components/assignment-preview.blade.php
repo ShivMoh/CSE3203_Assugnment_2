@@ -7,9 +7,9 @@
 <body>
     <!-- Pass assignments for the details -->
     <div class="assignment-preview-body">
-        <h2>Assignment 2</h2>
+        <h2>{{$details->title}}</h2>
         <div class="buttons">
-            <form  action="/detail" method="POST">
+            <form  action="/detail" method="get">
                 @csrf
                 <!-- Forward to assignment detail -->
                 <button type="submit" class="ghost-btn">

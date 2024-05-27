@@ -47,7 +47,9 @@
 
         <section class="assignment-preview">
             <div class="assignment-preview-container">
-                <x-assignment-preview></x-assignment-preview>
+                @foreach ($content as $assignment)
+                    <x-assignment-preview :details="$assignment"/>                
+                @endforeach
             </div>
         </section>
     </div>
