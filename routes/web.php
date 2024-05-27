@@ -55,3 +55,7 @@ Route::middleware('clear.edit.grades')->group(function () {
 Route::post('/update-grades', [GroupController::class, 'update_grades'])->name('update-grades');
 Route::post('/update-comment', [GroupController::class, 'update_comment'])->name('update-comment');
 Route::post('/delete-group', [GroupController::class, 'delete_group'])->name('delete-group');
+Route::post('/test-something', [GroupController::class, 'test'])->name('test-something');
+Route::view('/file', 'groups/test');
+
+Route::get('/export', [GroupController::class, 'export'])->name('export');
