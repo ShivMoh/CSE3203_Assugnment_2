@@ -17,7 +17,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
+    protected $fillable = [       
+        'id', 
         'name',
         'email',
         'password'
@@ -39,6 +40,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'id' => 'string',
         'name' => 'string',
         'email' => 'string',
         'password' => 'hashed'
