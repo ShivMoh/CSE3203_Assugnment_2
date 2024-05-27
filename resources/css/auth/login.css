@@ -1,0 +1,141 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: #ECDCAB;
+    color: #6A4200;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background {
+    width: 430px;
+    height: 520px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+}
+
+.background .shape {
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+}
+
+form {
+    height: 520px;
+    width: 400px;
+    background-color: white;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    padding: 10px 35px;
+}
+
+form * {
+    font-family: 'Quicksand', sans-serif;
+    color: #6A4200;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+
+form h3 {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 42px;
+    text-align: center;
+    color: #6A4200;
+    margin-top: 45px;
+    margin-bottom: 50px;
+}
+
+label {
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+input {
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-bottom: 2px solid #6A4200;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+::placeholder {
+    color: gray;
+}
+
+button {
+    margin-top: 6vh;
+    width: 30%;
+    background-color: #007bff;
+    color: white;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.register {
+    margin-top: 4vh; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    background-color: #ffffff;
+    color: gray;
+}
+
+.register .register-link {
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.register-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+.alert-success {
+    margin-top: 25px;
+    background-color: #ddffdd;
+    border-left: 6px solid #4CAF50;
+    padding: 10px;
+    font-style: italic;
+    text-align: left;
+}
+
+.error {
+    color: #f44336;
+    font-style: italic;
+    font-weight: 100;
+    margin-top: 2.5px;
+    font-size: 14px;
+}

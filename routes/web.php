@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\AuthController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,11 @@ use App\Http\Controllers\GroupController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/', function () {
+    return redirect('login');
+ });
+
 /* Subject to Change */
 Route::get('/test', function () {
     return view('test');
@@ -32,6 +40,13 @@ Route::get('/assignment-add', function () {
 
 Route::get('/group-reports', [GroupController::class, 'view_groups'])->name('group-reports');
 Route::post('/group-reports', [GroupController::class, 'view_groups'])->name('group-reports');
+
+Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [AuthController::class, 'register']);
+
+Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('login', [AuthController::class, 'login']);
+
 
 Route::middleware('clear.edit.grades')->group(function () {
     Route::post('/edit-grades', [GroupController::class, 'edit_grades'])->name('edit-grades');
