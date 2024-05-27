@@ -42,6 +42,16 @@ hr{
 
 }
 
+.filter-select {
+  padding: 8px;
+  border-radius: 3px;
+  border: solid 1px #6A4200;
+  margin-right: 8px;
+  height: 48px;
+
+}
+
+
 .search-bottom{
   display: flex;
   justify-content: space-between;

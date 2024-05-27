@@ -9,6 +9,15 @@
     <div class="main-content">
     <!-- Add content -->
 
+       
+
+        <form  class="back-button" action="/group-reports" method="POST">
+            @csrf
+            <button type="submit" class="ghost-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            Go back
+        </form>
 
         <section class="details">
             <h1 class="heading">{{$assessment->title}}</h1>
@@ -62,7 +71,7 @@
 
                 <div class="total-score-container row">
                     <div class="title">Percentage</div>
-                    <div class="score">100%</div>
+                    <div class="score">{{($grade->marks_attained / $assessment->total_marks) * 100}} %</div>
                 </div>
 
                 <div class="group-contribution-container">

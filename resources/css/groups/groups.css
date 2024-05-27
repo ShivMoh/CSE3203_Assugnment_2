@@ -23,6 +23,15 @@
     margin-left: 8px;
 }
 
+button {
+    transition: all linear 0.2s;
+}
+
+button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
 /* Assignment Preview */
 .group-preview-body{
     background-color: #ECDCAB;

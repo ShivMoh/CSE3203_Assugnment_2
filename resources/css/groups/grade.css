@@ -136,3 +136,24 @@ h1.heading{
 h2 {
     font-size: 22px;
 }
+
+.error {
+    width: 100%;
+    color: red;
+    font-weight: bold;
+    background-color: yellow;
+    padding: 10px;
+    border: solid red 2px;
+    text-align: center;
+}
+
+.back-button {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    align-items: center;
+}
+
+button:hover {
+    cursor: pointer;
+}
