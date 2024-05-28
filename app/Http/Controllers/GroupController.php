@@ -29,11 +29,20 @@ class GroupController extends Controller
 
     public function view_groups(Request $request) {
 
+        $assessment_id = "";
+        $course_id = "";
+        $assessment = null;
+
         if (!empty($request->input('search'))) {
             $groups = $this->get_group_by_name($request->input('search'));
         } else if (!empty($request->input('assessments'))) {
             $groups = $this->get_all_groups_for_assessment($request->input('assessments'));
-      
+            $assessment_id = $request->input('assessments');
+            $assessment = Assessment::where("id", $assessment_id)->get()[0];          
+            session('course')['assessment'] = $assessment;
+        }else if (!empty($request->input('courses'))) {
+            $groups = $this->get_all_groups_for_course($request->input('courses'));
+            $course_id = $request->input('courses');
         }  else {
             $groups = $this->get_all_groups();
         }
@@ -44,25 +53,48 @@ class GroupController extends Controller
             array_push($student_data, $data);
         }
 
-        // this should be retrieved from the session
-
-        if(Session::has("course_id")) {
-            $course_id = Session::get('course_id');
+    
+        $courses = array();
+        $course_id = "";
+        if(empty($request->input('courses'))) {
+            if(Session::has("course_id")) {
+                $course_id = Session::get('course_id');
+            } else {
+                // we'll take the first retrieved course as the default
+                $courses = (new CourseController)->retrieve_all_courses();
+                $course_id = $courses[0]->id;
+                
+                if (!Session::has("course")) {
+                    session([
+                        'course' => [
+                            'course_id' => $course_id,
+                            'assessment' => null,
+                            'course' => null
+                        ]
+                    ]);
+                } else {
+                    $course_id = session('course')['course_id'];
+                }
+            }
         } else {
-            // should never occur but just in case
-            // we'll take the first retrieved course
-            // to avoid breaking the website
-            $course_id = Course::all()[0]->id;
+            $courses = (new CourseController)->retrieve_all_courses();
+            $course_id = $request->input('courses');
+            session('course')['course_id'] = $course_id;
+            
         }
 
         $assessments = Assessment::where("course_id", $course_id)->get();
+        $course = (new CourseController)->get_course($course_id);
         
         return view(
             'groups/group-reports',
             [
                 'groups' => $groups,
                 'student_data'=>$student_data,
-                'assessments'=>$assessments
+                'assessments'=>$assessments,
+                'courses'=>$courses,
+                'c'=>$course,
+                'a'=>$assessment
             ]
         );
     }
@@ -105,7 +137,6 @@ class GroupController extends Controller
         return Group::where('id', $group_id)->get();
     }
 
-
     private function get_group_by_name($group_name) {
         $groups = Group::where("name", 'like', '%'.$group_name.'%')->get();
         return $groups; 
@@ -113,6 +144,23 @@ class GroupController extends Controller
 
     private function get_all_groups() {
         return Group::orderBy('id', 'ASC')->get();
+    }
+
+    private function get_all_groups_for_course($course_id) {
+        $assessments = Assessment::where('course_id', $course_id)->get();
+        
+        $groups = array();
+
+        foreach ($assessments as $assessment) {
+            $grades = Grade::where('assessment_id', $assessment->id)->get();
+            foreach ($grades as $grade) {
+                $associated_group = Group::where('grade_id', $grade->id)->get()[0];
+                array_push($groups, $associated_group);
+            }
+        }
+
+        return $groups;
+       
     }
 
     private function get_all_groups_for_assessment($assessment_id) {

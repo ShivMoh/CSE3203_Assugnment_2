@@ -37,7 +37,17 @@
                         @endforeach
                     </select>
                 </form>
-                
+
+                <form action="/group-reports" method="POST" id="courses">
+                    @csrf
+                    <select name="courses" id="courses" class="filter-select" onchange="this.form.submit()">
+                        <option value="" selected>All</option>
+                        @foreach ($courses as $course)
+                            <option value="{{$course->id}}">{{$course->name}}</option>
+                        @endforeach
+                    </select>
+                </form>
+
                 <div class="button-container">
                     <button type="submit" form="search" class="ghost-btn">
                         <i class="fa fa-lg fa-search"></i>
@@ -54,7 +64,7 @@
         </div>
     
     </section>
-    
+    <h2>Currently showing groups for Assessment: {{$a == null ? 'All' : $a->title}} belonging to Course: {{$c->name}}</h2>
     @foreach ($groups as $index => $group)
     
         @php
