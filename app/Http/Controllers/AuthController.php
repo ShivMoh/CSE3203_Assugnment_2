@@ -50,7 +50,7 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
     
-            return redirect()->intended('/assignments');
+            return redirect()->intended('/courses');
         }
 
     

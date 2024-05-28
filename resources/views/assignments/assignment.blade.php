@@ -44,6 +44,13 @@
                 </form>
             </div>
 
+            @if ($errors->any())
+                @foreach ($errors as $error)
+                <p> {{$error}}</p>
+                
+                @endforeach
+            @endif
+
         </section>
 
         <section class="assignment-preview">

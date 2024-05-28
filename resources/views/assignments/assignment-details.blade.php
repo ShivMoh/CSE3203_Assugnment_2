@@ -1,4 +1,5 @@
 @vite(['resources/css/app.css','resources/css/assignments.css', 'resources/css/app.css'])
+@vite(['resources/js/assignments.js'])
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -8,13 +9,16 @@
     <x-nav></x-nav>
     <div class="main-content">
     <!-- Add content -->
+        
         <section class="details">
             <div class="row">
-                <h1 class="heading">{{$assessment->title}}</h1>
+                <div class="">
+                    <h1 class="heading">{{$assessment->title}}</h1>
+                    <h3><i>{{$course->name}}</i></h3>
+                </div>
                 <div class="edit-btn">
-                    <form action="/assignment-add" method="get">
+                    <form action="/assignment-update" method="get">
                         @csrf
-                        <input type="hidden" name="type" value="edit">
                         <button type="submit" class="ghost-btn">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
@@ -32,16 +36,19 @@
                 <h1>Breakdown</h1>
                 <div class="sections">
                     <h2>Sections</h2>
-                    <form  action="/detail" method="POST">
-                        @csrf
-                        <!-- add section -->
-                        <input type="hidden" name="toggle-save" value="true">
-                        <button type="submit" class="ghost-btn">
-                            <i class="fa-solid fa-plus"></i>                       
-                        </button>
-                    </form>
+                    
+                    <button type="submit" class="ghost-btn" id="toggle-section">
+                        <i class="fa-solid fa-plus"></i>                       
+                    </button>
                 </div> 
             </div>
+
+            @if ($errors->any())
+                @foreach ($errors as $error)
+                <p style="color: red;"> {{$error}}</p>
+                
+                @endforeach
+            @endif
             
             <div class="parts">
                 <div class="section-parts">
@@ -54,8 +61,7 @@
             </div> 
 
             <!-- View if Section Add -->
-            @if (!empty(request()->input('toggle-save')))
-            <div class="section-add">
+            <div class="section-add hidden" id="section-add">
                 <form action="/assignment-section-add" method="POST">
                     @csrf
                     <div class="row form-group">
@@ -73,7 +79,6 @@
                     </button>
                 </form>
             </div>
-            @endif
         </section>
 
 
@@ -109,6 +114,16 @@
         document.getElementById('file-input').addEventListener('change', function() {
             document.getElementById('submit-button').click();
         });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const toggleButton = document.getElementById("toggle-section");
+            const toggleSection = document.getElementById("section-add");
+
+            toggleButton.addEventListener("click", function() {
+                toggleSection.classList.toggle("hidden");
+            });
+        });
+
     </script>   
 
 </body>

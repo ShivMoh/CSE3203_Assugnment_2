@@ -9,32 +9,22 @@
     <x-nav></x-nav>
     <div class="main-content">
         <h1 class="title">
-            @if ($type == 'edit')
-                Edit Assignment
-            @endif
-            @if ($type == 'add')
-                Add Assignment
-            @endif
-        
+            Add Assignment        
         </h1>
         <div class="assignment-add-form">
 
 
-            <form action="/assignment-{{$type}}" method="POST">
+            <form action="/assignment-add" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="title">Title:</label>
-                    @if ($type=='add')
-                        <input
-                        type="text" 
-                        name="title" 
-                        id="title" 
-                        class="form-control" 
-                        placeholder="Enter Assignment Title" 
-                        required>
-                    @elseif ($type=='edit')
-                    
-                    @endif
+                    <input
+                    type="text" 
+                    name="title" 
+                    id="title" 
+                    class="form-control" 
+                    placeholder="Enter Assignment Title" 
+                    required>
                 </div>
                 <div class="form-group">
                     <label for="desc">Description:</label>
@@ -49,7 +39,7 @@
                 <div class="form-group">
                     <label for="marks">Total Marks:</label>
                     <input 
-                    type="float" 
+                    type="number" 
                     name="marks" 
                     id="marks" 
                     required>

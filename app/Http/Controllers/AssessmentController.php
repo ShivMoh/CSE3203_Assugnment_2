@@ -8,32 +8,11 @@ use Illuminate\Http\Request;
 use App\Models\Assessment;
 use App\Models\Category;
 use App\Models\Course;
-use App\Models\Section;
+use App\Http\Controllers\CourseController;
 
 
 class AssessmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    // public function index(Request $request)
-    // {
-    //     $assessments = [];
-    //     /* Searching */
-    //     if (($request->has('search')) && (filled($request->input('search'))) ){
-    //         $assessments = $this->getAssessmentByName($request->input('search'));
-    //     }
-    //     /* Directed from Courses */
-    //     elseif ((Session::has('course_id'))) {
-    //         $courseId = Session::get('course_id');
-    //         $assessments = $this->getAssessmentByCourseId($courseId);
-    //     }
-    //     else{
-    //         $assessments = $this->getAllAssessments();
-    //     }
-
-    //     return view('assignments.assignment', ['content'=>$assessments]);
-    // }
 
     public function index(Request $request)
     {
@@ -82,7 +61,7 @@ class AssessmentController extends Controller
         $request->validate([
             'title' => 'required|string',
             'desc' => 'required|string',
-            'marks' => 'required|string',
+            'marks' => 'required|numeric',
             'weight' => 'required|numeric',
             'course_id' => 'required|string',
             'category_id' => 'required|string'
@@ -121,11 +100,14 @@ class AssessmentController extends Controller
         // Fetch the assessment and sections using the assessment ID
         $assessment = $this->getAssessmentById($assessmentId);
         $sections = $this->getAssessmentSections();
+        $courseController = new CourseController;
+        $course = $courseController->getCoursePublic($assessment->course_id);
 
         // Return the view with the assessment and sections
         return view('assignments.assignment-details', [
             'assessment' => $assessment,
-            'sections' => $sections
+            'sections' => $sections,
+            'course' => $course
         ]);
     }
 
@@ -153,6 +135,50 @@ class AssessmentController extends Controller
         $assessment->delete();
         return redirect()->route('assignments');
     }
+
+    public function viewUpdate()
+    {
+        $assessment = $this->getCurrentAssessment();
+        $categories = $this->getAllCategories();
+        $courses = $this->getAllCourses();
+        return view('assignments.assignment-update', [
+            'categories' => $categories,
+            'courses'=>$courses,
+            'assessment'=>$assessment
+        ]);
+    }
+
+    public function updateAssessment(Request $request)
+    {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'desc' => 'required|string',
+            'marks' => 'required|numeric|min:0',
+            'weight' => 'required|numeric|min:0',
+            'course_id' => 'required|exists:courses,id',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        // Retrieve the assessment by its ID
+        $assessment = $this->getCurrentAssessment();
+
+        // Update the assessment's attributes
+        $assessment->title = $validatedData['title'];
+        $assessment->description = $validatedData['desc'];
+        $assessment->total_marks = $validatedData['marks'];
+        $assessment->course_weight = $validatedData['weight'];
+        $assessment->course_id = $validatedData['course_id'];
+        $assessment->category_id = $validatedData['category_id'];
+
+        // Save the updated assessment back to the database
+        $assessment->save();
+
+        // Redirect the user to the assignment details page with a success message
+        return redirect()->route('assessment-details');
+    }
+
+
 
     /* Getters */
 
