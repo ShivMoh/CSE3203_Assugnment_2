@@ -98,6 +98,12 @@
         display: flex;
         justify-content: center;
     }
+    .edit-btn  {
+        display: flex;
+        align-content: center;
+        align-self: center;
+        padding: none;
+    }
     .group-btns{
         margin: 48px 0;
         width: 40%;

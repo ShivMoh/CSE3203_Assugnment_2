@@ -94,7 +94,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/courses', function () {
         return view('/courses/courses');
-    });
+    })->name('courses');
     // Route::get('/courses-add', function () {
     //     return view('/courses/courses-add');
     // });
