@@ -19,6 +19,7 @@ use App\Models\Comment;
 use App\Models\Section;
 use App\Models\Course;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\CommentController;
 
 
 class GradeController extends Controller
@@ -89,7 +90,7 @@ class GradeController extends Controller
             return redirect()->route('edit-grades')->withErrors($validator)->withInput($request->all());
         }
 
-        $comment = $this->get_comment($request->input('grade_id'));
+        $comment = (new CommentController)->get_comment($request->input('grade_id'));
 
         if(!empty($request->input('comment'))) {
             $comment->comment = $request->input('comment');
@@ -99,30 +100,6 @@ class GradeController extends Controller
         $comment->save();
 
         return redirect()->route('edit-grades');
-    }
-
-    private function get_comment($grade_id) {
-        $comment = Comment::where('grade_id', $grade_id)->get();
-
-        if(count($comment) == 0) return false;
-
-        return $comment[0];
-    }
-
-    private function create_if_not_exist_comment($grade_id) {
-
-        $comment = $this->get_comment($grade_id);
-        
-        if(!$comment) {
-            $comment = new Comment([
-                "id"=> (string) Str::uuid(),
-                "comment"=>0
-                ]
-            );
-        } 
-
-        $comment->save();
-        return $comment;
     }
 
     private function recalculate_grades($grade_id, $grade_section_id, $updated_section_score) {
@@ -150,7 +127,7 @@ class GradeController extends Controller
         $grade = Grade::where("id", $group->grade_id)->orderBy("id", "asc")->get()[0];
         $grade_sections = GradeSection::where("grade_id", $group->grade_id)->orderBy("id", "asc")->get();
         $assessment = Assessment::where("id", $grade->assessment_id)->get()[0];
-        $comment = $this->create_if_not_exist_comment($grade->id);
+        $comment = (new CommentController)->create_if_not_exist_comment($grade->id);
         $sections = Section::where('assessment_id', $assessment->id)->orderBy("id", "asc")->get();
         $students = (new StudentController)->get_students_for_group($group_id);
         return [
