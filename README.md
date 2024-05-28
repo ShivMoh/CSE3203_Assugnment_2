@@ -23,7 +23,7 @@ Run the following command to install the necessary extensions on an Ubuntu-based
 ```
 sudo apt install php-zip php-xml php8.1-gd php8.1-iconv php8.1-simplexml php8.1-xmlreader php-zip
 ```
-Installation generally follows: php-[package_name] or php[php_version_number]-[package_name]
+Installation generally follows: `php-[package_name]` or `php[php_version_number]-[package_name]`
 
 ##### Windows Installation
 Refer to the [official PHP documentation](https://www.php.net/manual/en/install.pecl.windows.php) for instructions on installing extensions on a Windows machine.
