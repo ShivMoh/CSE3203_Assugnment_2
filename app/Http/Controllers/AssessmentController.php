@@ -103,6 +103,7 @@ class AssessmentController extends Controller
         $courseController = new CourseController;
         $course = $courseController->getCoursePublic($assessment->course_id);
 
+
         // Return the view with the assessment and sections
         return view('assignments.assignment-details', [
             'assessment' => $assessment,
