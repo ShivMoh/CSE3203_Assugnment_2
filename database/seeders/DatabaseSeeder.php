@@ -118,12 +118,12 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'name' => 'Group A',
-                'grade_id' => DB::table('grades')->where('marks_attained', 85)->first()->id,
+                'grade_id' => DB::table('grades')->where('marks_attained', 100)->first()->id,
             ],
             [
                 'id' => Str::uuid(),
                 'name' => 'Group B',
-                'grade_id' => DB::table('grades')->where('marks_attained', 90)->first()->id,
+                'grade_id' => DB::table('grades')->where('marks_attained', 100)->first()->id,
             ],
         ]);
 
@@ -177,21 +177,21 @@ class DatabaseSeeder extends Seeder
                 'id' => Str::uuid(),
                 'name' => "Section 1",
                 'marks_attained' => 30,
-                'grade_id' => DB::table('grades')->where('marks_attained', 85)->first()->id,
+                'grade_id' => DB::table('grades')->where('marks_attained', 100)->first()->id,
                 'section_id' => DB::table('sections')->where('title', 'Section 1')->first()->id,
             ],
             [
                 'id' => Str::uuid(),
                 'name' => 'Section 2',
                 'marks_attained' => 20,
-                'grade_id' => DB::table('grades')->where('marks_attained', 85)->first()->id,
+                'grade_id' => DB::table('grades')->where('marks_attained', 100)->first()->id,
                 'section_id' => DB::table('sections')->where('title', 'Section 1')->first()->id,
             ],
             [
                 'id' => Str::uuid(),
                 'name' => "Section 1",
                 'marks_attained' => 50,
-                'grade_id' => DB::table('grades')->where('marks_attained', 90)->first()->id,
+                'grade_id' => DB::table('grades')->where('marks_attained', 100)->first()->id,
                 'section_id' => DB::table('sections')->where('title', 'Section 2')->first()->id,
             ],
         ]);
@@ -201,12 +201,12 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'comment' => 'Great job!',
-                'grade_id' => DB::table('grades')->where('marks_attained', 85)->first()->id,
+                'grade_id' => DB::table('grades')->where('marks_attained', 100)->first()->id,
             ],
             [
                 'id' => Str::uuid(),
                 'comment' => 'Excellent work!',
-                'grade_id' => DB::table('grades')->where('marks_attained', 90)->first()->id,
+                'grade_id' => DB::table('grades')->where('marks_attained', 100)->first()->id,
             ],
         ]);
     }

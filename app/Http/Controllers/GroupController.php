@@ -57,23 +57,21 @@ class GroupController extends Controller
         $courses = array();
         $course_id = "";
         if(empty($request->input('courses'))) {
-            if(Session::has("course_id")) {
-                $course_id = Session::get('course_id');
+         
+            // we'll take the first retrieved course as the default
+            $courses = (new CourseController)->retrieve_all_courses();
+            $course_id = $courses[0]->id;
+            
+            if (!Session::has("course")) {
+                session([
+                    'course' => [
+                        'course_id' => $course_id
+                    ]
+                ]);
             } else {
-                // we'll take the first retrieved course as the default
-                $courses = (new CourseController)->retrieve_all_courses();
-                $course_id = $courses[0]->id;
-                
-                if (!Session::has("course")) {
-                    session([
-                        'course' => [
-                            'course_id' => $course_id
-                        ]
-                    ]);
-                } else {
-                    $course_id = session('course')['course_id'];
-                }
+                $course_id = session('course')['course_id'];
             }
+            
         } else {
             $courses = (new CourseController)->retrieve_all_courses();
             $course_id = $request->input('courses');
