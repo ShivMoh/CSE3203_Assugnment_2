@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
                 'id' => Str::uuid(),
                 'title' => 'Final Exam',
                 'description' => 'Final examination for CS101',
-                'total_marks' => 100,
+                'total_marks' => 50,
                 'course_weight' => 0.5,
                 'course_id' => DB::table('courses')->where('code', 'CS101')->first()->id,
                 'category_id' => DB::table('categories')->where('name', 'Exams')->first()->id,
@@ -101,14 +101,14 @@ class DatabaseSeeder extends Seeder
         DB::table('grades')->insert([
             [
                 'id' => Str::uuid(),
-                'marks_attained' => 85,
+                'marks_attained' => 100,
                 'letter_grade' => 'A',
                 'assessment_id' => DB::table('assessments')->where('title', 'Midterm Exam')->first()->id,
             ],
             [
                 'id' => Str::uuid(),
-                'marks_attained' => 90,
-                'letter_grade' => 'A+',
+                'marks_attained' => 100,
+                'letter_grade' => 'A',
                 'assessment_id' => DB::table('assessments')->where('title', 'Final Exam')->first()->id,
             ],
         ]);

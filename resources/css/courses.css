@@ -26,136 +26,64 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-.course-container {
-    margin-left: -20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-.course-card {
-    background-color: #ECDCAB;
-    color: #6A4200;
-    width: calc(40% - 22px);
-    height: 22vh;
-    padding: 20px;
-    margin: 24px;
-    border-radius: 16px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.course-card .course-info {
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-    font-family: 'Quicksand', sans-serif;
-}
-.course-card .course-info .course-name {
-    font-size: 24px;
-    font-weight: 500;
-}
-.course-card .course-info .course-code {
-    font-size: 20px;
-    font-weight: 500;
-}
-.course-card .course-info .department {
-    font-size: 16px;
-}
-.course-card .course-arrow {
-    font-size: 24px;
-}
 
-.course-add-form{
-    background-color: #ECDCAB;
-    color: #6A4200;
-    padding: 48px;
-    margin-top: 48px;
-    border-radius: 9px;
-    box-shadow: 0 0 45px 3px rgba(0, 0, 0, 0.1);
-}
-
-.course-add-form form{
+.container {
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
-.course-add-form .form-group {
-    margin-bottom: 20px;
-    display: block; 
-}
-
-.course-add-form .form-group label {
-    display: block; 
-    margin-bottom: 8px ;
-
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.course-add-form .form-group input,
-.course-add-form .form-group textarea,
-.course-add-form .form-group select {
-    width: 100%; 
-
-    border: solid 1px #6A4200;
-    border-radius: 3px;
-
-    padding: 8px;
-
-    font-family: 'Quicksand', sans-serif;
-}
-
-.course-add-form .form-group textarea {
-    resize: vertical; 
-}
-
-/* Ensure text content aligns to the left */
-.course-add-form .form-group label,
-.course-add-form .form-group input,
-.course-add-form .form-group textarea,
-.course-add-form .form-group select {
-    text-align: left;
+.course-container {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    row-gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    
 }
 
 .course-card {
     background-color: #ECDCAB;
     color: #6A4200;
-    width: calc(40% - 22px);
+    width: 500px;
     height: 22vh;
     padding: 20px;
-    margin: 24px;
     border-radius: 16px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
 }
 
 .form-btns {
+    margin-top:  90px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    column-gap: 50px;
+    column-gap: 20px;
     width: 100%;
 }
 
-.course-card .course-info {
+.course-info {
     display: flex;
     flex-direction: column;
 }
-.course-card .course-info .course-name {
+
+.course-name {
     font-size: 24px;
     font-weight: 500;
 }
-.course-card .course-info .course-code {
+.course-code {
     font-size: 20px;
     font-weight: 500;
 }
-.course-card .course-info .department {
+.department {
     font-size: 16px;
 }
-.course-card .course-arrow {
+.course-arrow {
     font-size: 24px;
 }
 
@@ -176,21 +104,6 @@ body {
     margin-bottom: 20px;
     display: block; 
 }
-
-.main-content{
-    /* margin accounts for navbar*/
-    margin-top: 116px;
-    padding: 96px 192px 96px 192px;
-}
-
-.filter-select {
-    width: 100px;
-    border-radius: 3px;
-    border: solid 1px #6A4200;
-    margin-right: 8px;
-    height: 48px;
-  
-  }
 
 .row{
     display: flex;
@@ -219,57 +132,3 @@ button:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
-
-/* Assignment Preview */
-.group-preview-body{
-    background-color: #ECDCAB;
-    color: #6A4200;
-
-    border-radius: 100px;
-    box-shadow: 0 0 45px 3px rgba(0, 0, 0, 0.1);
-
-    padding: 24px 64px;
-    margin-top: 24px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.line {
-    border: solid black 2px;
-}
-
-.inner-container {
-    
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center; 
-}
-
-.buttons {
-    margin-top: 10px;
-}
-
-.group-expanded {
-    display: none;
-    flex-direction: column;
-}
-
-.group-member-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.buttons{
-    display: flex;
-    align-items: center;
-}
-
-.buttons .ghost-btn{
-    margin-left: 8px;
-    border-radius: 50px;
-}
-
