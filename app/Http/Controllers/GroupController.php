@@ -18,6 +18,7 @@ use App\Models\Comment;
 use App\Models\Section;
 use App\Models\Course;
 use Maatwebsite\Excel\ExcelServiceProvider;
+use App\Http\Controllers\StudentController;
 
 
 
@@ -38,7 +39,7 @@ class GroupController extends Controller
 
         $student_data = array();
         foreach ($groups as $group) {
-            $data = $this->get_all_students($group->id);
+            $data = (new StudentController)->get_students_for_group($group->id);
             array_push($student_data, $data);
         }
 
@@ -83,21 +84,6 @@ class GroupController extends Controller
 
     }
 
-    public function get_all_students($group_id) {
-        $contribution_plus_students = array();
-        $contributions = Contribution::where('group_id', $group_id)->get();
-        
-        foreach ($contributions as $contribution) {
-            $data = [
-                "student"=>(Student::where('id', $contribution->student_id)->get())[0],
-                "contribution"=>$contribution
-            ];
-
-            array_push($contribution_plus_students, $data);
-        }
-
-        return $contribution_plus_students;
-    }
 
 
     private function get_group_by_id($group_id) {

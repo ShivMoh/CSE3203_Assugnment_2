@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\SectionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GradeController;
@@ -77,18 +78,18 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('/assignments',[AssessmentController::class, 'index'])->name('assignments');
+    Route::post('/assignments',[AssessmentController::class, 'index'])->name('assignments');
 
-    Route::post('/assignments', function () {
-        return view('/assignments/assignment');
-    });
 
-    Route::post('/detail', [AssessmentController::class, 'viewAssessmentDetail']);
+    Route::post('/detail', [AssessmentController::class, 'viewAssessmentDetail'])->name('assessment-details');
+    Route::get('/detail', [AssessmentController::class, 'viewAssessmentDetail'])->name('assessment-details');
 
     Route::get('/assignment-add', [AssessmentController::class, 'viewAdd']);
     Route::post('/assignment-add', [AssessmentController::class, 'addAssessment']);
     Route::post('/assignment-section-add', [AssessmentController::class, 'addSection']);
     Route::post('/assignment-section-add', [AssessmentController::class, 'addSection']);
     Route::post('/delete-assignment', [AssessmentController::class, 'deleteAssessmentById']);
+    Route::post('/delete-section', [SectionController::class, 'deleteSectionById']);
     
 
     Route::get('/courses', function () {
@@ -100,6 +101,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/courses-add', [CourseController::class, 'viewAdd']);
     Route::post('/courses-add', [CourseController::class, 'addCourse']);
     Route::post('/delete-course', [CourseController::class, 'deleteCourseById']);
+    Route::post('/view', [CourseController::class, 'viewAssignments']);
 });
 
 

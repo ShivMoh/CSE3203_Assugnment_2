@@ -37,7 +37,7 @@
             @foreach ($students as $student)
                 <div class="group-member-container">
                     <div class="group-member-name">{{$student['student']->first_name}} {{$student['student']->last_name}}</div>
-                    <div class="group-member-percentage">25%</div>
+                    <div class="group-member-percentage">{{$student['contribution']->percentage}}%</div>
                 </div>
             @endforeach
 

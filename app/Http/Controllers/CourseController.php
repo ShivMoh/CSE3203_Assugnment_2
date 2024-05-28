@@ -68,5 +68,17 @@ class CourseController extends Controller
         $course->delete();
         return redirect()->intended('/courses');
     }
+    public function viewAssignments(Request $request)
+    {
+        // Check if course_id exists in the request
+        if ($request->has('course_id')) {
+            // Store course_id in the session
+            $courseId = $request->input('course_id');
+            session(['course_id' => $courseId]);
+        }
+
+        // Redirect to the 'assignments' route
+        return redirect()->route('assignments');
+    }
 
 }

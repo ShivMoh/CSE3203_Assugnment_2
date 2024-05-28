@@ -34,12 +34,29 @@ class SectionController extends Controller
         
     }
 
-    
+    public function deleteSectionById(Request $request){
+        $request->validate([
+            'id' => 'required|string|exists:sections,id'
+        ]);
+        $section_id = $request->id;
+
+        $section = $this->getSectionById($section_id);
+        if (!$section){
+            abort(404, 'Cannot find Section.');
+        }
+
+        $section->delete();
+        return redirect()->route('assessment-details');
+    }
 
     /* Getters */
     public function getSectionByAssessmentId(){
         $id = Session::get('assessment_id');
 
         return Section::where('assessment_id', $id)->get();
+    }
+
+    private function getSectionById($id){
+        return Section::where('id', $id)->first();
     }
 }

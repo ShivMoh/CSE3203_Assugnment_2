@@ -19,6 +19,7 @@ use App\Models\Comment;
 use App\Models\Section;
 use App\Models\Course;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\CommentController;
 
 
 class GradeController extends Controller
@@ -28,7 +29,6 @@ class GradeController extends Controller
         $validator = Validator::make($request->all(), [
             'group_id'=>'required | string',
         ]);
-
  
         if( $validator->fails() && empty(session('group')) || $request->isMethod('GET') && empty(session('group'))) {
             return redirect()->route('group-reports')->withErrors($validator)->withInput();
@@ -89,7 +89,7 @@ class GradeController extends Controller
             return redirect()->route('edit-grades')->withErrors($validator)->withInput($request->all());
         }
 
-        $comment = $this->get_comment($request->input('grade_id'));
+        $comment = (new CommentController)->get_comment($request->input('grade_id'));
 
         if(!empty($request->input('comment'))) {
             $comment->comment = $request->input('comment');
@@ -99,30 +99,6 @@ class GradeController extends Controller
         $comment->save();
 
         return redirect()->route('edit-grades');
-    }
-
-    private function get_comment($grade_id) {
-        $comment = Comment::where('grade_id', $grade_id)->get();
-
-        if(count($comment) == 0) return false;
-
-        return $comment[0];
-    }
-
-    private function create_if_not_exist_comment($grade_id) {
-
-        $comment = $this->get_comment($grade_id);
-        
-        if(!$comment) {
-            $comment = new Comment([
-                "id"=> (string) Str::uuid(),
-                "comment"=>0
-                ]
-            );
-        } 
-
-        $comment->save();
-        return $comment;
     }
 
     private function recalculate_grades($grade_id, $grade_section_id, $updated_section_score) {
@@ -150,10 +126,9 @@ class GradeController extends Controller
         $grade = Grade::where("id", $group->grade_id)->orderBy("id", "asc")->get()[0];
         $grade_sections = GradeSection::where("grade_id", $group->grade_id)->orderBy("id", "asc")->get();
         $assessment = Assessment::where("id", $grade->assessment_id)->get()[0];
-        $comment = $this->create_if_not_exist_comment($grade->id);
+        $comment = (new CommentController)->create_if_not_exist_comment($grade->id);
         $sections = Section::where('assessment_id', $assessment->id)->orderBy("id", "asc")->get();
-        $group_controller = new GroupController();
-        $students = $group_controller->get_all_students($group_id);
+        $students = (new StudentController)->get_students_for_group($group_id);
         return [
             "comment"=>$comment,
             "group"=>$group,
@@ -163,6 +138,12 @@ class GradeController extends Controller
             "assessment"=>$assessment,
             "students"=>$students
         ];
+    }
+
+    private function update_grade_section($model, $marks_attained) {
+        $model->marks_attained = $marks_attained;
+        $model->save();
+        return;
     }
     
     public function import_grades(Request $request) {
@@ -218,16 +199,17 @@ class GradeController extends Controller
         $group_id = $request->input('group_id');
       
         $data = $this->get_data($group_id);
-        $data['comment']->comment = $excel_data[0][2][$comment_index];
-        $data['comment']->save();
+        (new CommentController)->update_comment($data['comment'], $excel_data[0][2][$comment_index]);
         $x = 0;
         for ($i=2; $i < count($data['students']) + 2; $i++) { 
-            $data['students'][$x]['contribution']->percentage = $excel_data[0][$i][$contribution_award_index];
-            $data['students'][$x]['student']->first_name = $excel_data[0][$i][2];
-            $data['students'][$x]['student']->last_name = $excel_data[0][$i][1];
-            $data['students'][$x]['student']->usi = $excel_data[0][$i][3];
-            $data['students'][$x]['contribution']->save();
-            $data['students'][$x]['student']->save();
+            (new ContributionController)->update_percentage($data['students'][$x]['contribution'], 
+                                                $excel_data[0][$i][$contribution_award_index]);
+
+            (new StudentController)->update_bio_data(   $data['students'][$x]['student'], 
+                                                        $excel_data[0][$i][2],
+                                                        $excel_data[0][$i][1],
+                                                        $excel_data[0][$i][3]
+                                                    );     
             $x++;
         }
 
@@ -235,9 +217,9 @@ class GradeController extends Controller
 
         foreach ($data['grade_sections'] as $key => $grade_section) {
             if((float) $excel_data[0][2][$start] > (float) $data['sections'][$key]->marks_allocated) {
-                $grade_section->marks_attained = $data['sections'][$key]->marks_allocated;
+                $this->update_grade_section($grade_section, $data['sections'][$key]->marks_allocated);
             } else {
-                $grade_section->marks_attained = $excel_data[0][2][$start];
+                $this->update_grade_section($grade_section, $excel_data[0][2][$start]);
             }
             $start++;
             $grade_section->save();
