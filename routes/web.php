@@ -87,6 +87,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/assignment-add', [AssessmentController::class, 'viewAdd']);
     Route::post('/assignment-add', [AssessmentController::class, 'addAssessment']);
     Route::post('/assignment-section-add', [AssessmentController::class, 'addSection']);
+    Route::post('/assignment-section-add', [AssessmentController::class, 'addSection']);
+    Route::post('/delete-assignment', [AssessmentController::class, 'deleteAssessmentById']);
     
 
     Route::get('/courses', function () {

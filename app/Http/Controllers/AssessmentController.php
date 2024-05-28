@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\Assessment;
 use App\Models\Category;
@@ -65,19 +66,57 @@ class AssessmentController extends Controller
         return redirect()->route('assignments');
     }
 
-    public function viewAssessmentDetail(Request $request){
-        $assessment = $this->getAssessmentById($request->input('id'));
-        $sections = $this->getAssessmentSections($request->input('id'));
-        return view('assignments.assignment-details',[
-            'assessment'=>$assessment,
-            'sections'=>$sections
+    public function viewAssessmentDetail(Request $request)
+    {
+        // Check if the request has an assessment ID
+        if ($request->has('id')) {
+            $assessmentId = $request->input('id');
+            // Store the assessment ID in the session
+            Session::put('assessment_id', $assessmentId);
+        } else {
+            // Check if the session has an assessment ID
+            if (Session::has('assessment_id')) {
+                $assessmentId = Session::get('assessment_id');
+            } else {
+                // Redirect to the assignments route if no ID is found
+                return redirect()->route('assignments');
+            }
+        }
+
+        // Fetch the assessment and sections using the assessment ID
+        $assessment = $this->getAssessmentById($assessmentId);
+        $sections = $this->getAssessmentSections();
+
+        // Return the view with the assessment and sections
+        return view('assignments.assignment-details', [
+            'assessment' => $assessment,
+            'sections' => $sections
         ]);
     }
 
+
     public function addSection(Request $request){
+        $request->validate([
+            'name' => 'required|string',
+            'marks' => 'required|numeric',
+        ]);
+
         $sectionController = new SectionController;
-        $sectionController->addSection($request);
-        $this->viewAssessmentDetail($request);
+        $sectionController->addSection($request->name, $request->marks);
+        return $this->viewAssessmentDetail($request);
+    }
+
+    public function deleteAssessmentById(Request $request){
+        $request->validate([
+            'id' => 'required|string|exists:assessments,id'
+        ]);
+
+        $assessment = $this->getAssessmentById($request->input('id'));
+        if (!$assessment->exists()){
+            abort(404, 'Cannot delete assignment.');
+        }
+        $assessment->delete();
+        return redirect()->route('assignments');
     }
 
     /* Getters */
@@ -106,7 +145,8 @@ class AssessmentController extends Controller
         return Assessment::where('course_id', $course_id)->get();
     }
 
-    private function getAssessmentSections($assessment_id){
-        return Section::where('assessment_id', $assessment_id)->get();
+    private function getAssessmentSections(){
+        $sectionController = new SectionController;
+        return $sectionController->getSectionByAssessmentId();
     }
 }

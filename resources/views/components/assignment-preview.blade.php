@@ -17,9 +17,12 @@
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </form>
-            <form  action="" method="POST">
+
+            <!-- PAY ATTENTION HERE KRISTEEN -->
+            <form  action="/delete-assignment" method="POST">
                 @csrf
                 <!-- delete -->
+                <input type="hidden" name="id" value="{{$details->id}}">
                 <button type="submit" class="ghost-btn">
                     <i class="fa fa-solid fa-lg fa-x"></i>                        
                 </button>

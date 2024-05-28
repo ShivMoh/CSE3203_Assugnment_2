@@ -23,6 +23,7 @@
                     <form  action="/detail" method="POST">
                         @csrf
                         <!-- add section -->
+                        <input type="hidden" name="toggle-save" value="true">
                         <button type="submit" class="ghost-btn">
                             <i class="fa-solid fa-plus"></i>                       
                         </button>
@@ -33,7 +34,7 @@
             <div class="parts">
                 <div class="section-parts">
                     @foreach ($sections as $section)
-                        <x-assignment-section :details="$section" \>
+                        <x-assignment-section :details="$section"/>
                     @endforeach
                     
                 </div>
@@ -41,7 +42,7 @@
             </div> 
 
             <!-- View if Section Add -->
-            @if (request()->isMethod('post'))
+            @if (!empty(request()->input('toggle-save')))
             <div class="section-add">
                 <form action="/assignment-section-add" method="POST">
                     @csrf
@@ -55,9 +56,6 @@
                         <input type="number" name="marks">
                     </div>
                     <hr>
-                    <div class="row form-group">
-                        <input type="hidden" name="id" value="{{$assessment->id}}">
-                    </div>
                     <button class="add-more" type="submit">
                         Save
                     </button>
