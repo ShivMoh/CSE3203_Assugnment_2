@@ -4,6 +4,15 @@
     padding: 96px 192px 96px 192px;
 }
 
+.filter-select {
+    width: 100px;
+    border-radius: 3px;
+    border: solid 1px #6A4200;
+    margin-right: 8px;
+    height: 48px;
+  
+  }
+
 .row{
     display: flex;
     justify-content: space-between;

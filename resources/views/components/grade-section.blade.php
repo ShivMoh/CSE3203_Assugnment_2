@@ -34,14 +34,7 @@
             </form>
 
         </div>
-        <div class="row">
-            @if ($errors->has('marks'))
-                <span class="error">Marks is a required field</span>
-            @endif
-            @if ($errors->has('marks_overflow'))
-                <span class="error">{{ $errors->first('marks_overflow')}}</span>
-            @endif
-        </div>
+       
     </div>
 </body>
 

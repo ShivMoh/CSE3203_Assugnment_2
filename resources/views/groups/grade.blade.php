@@ -27,21 +27,41 @@
          
         </section>
 
-        
-
+    
         <hr>
         <section class="breakdown">
             <div class="title">
               
-                <h1>{{$group->name}}</h1>
+                <div class="title-container">
+                    <h1>{{$group->name}}</h1>
 
+                    <form action="/export_grades" method="POST">
+                        @csrf
+                        <input type="hidden" name="group_id" value="{{$group->id}}" >
+                        <button>Export grades</button>
+                    </form>
+
+                    <form action="{{ route('import-grades') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" name="file" id="file" required onchange="this.form.submit()">
+                        <input type="hidden" name="group_id" value="{{$group->id}}" >
+                    </form>
+                </div>
+               
                 <div class="sections">
                     <h2>Sections</h2>
-              
                 </div> 
             </div>
             
             <div class="parts">
+                <div class="row">
+                    @if ($errors->has('marks'))
+                        <span class="error">Marks is a required field</span>
+                    @endif
+                    @if ($errors->has('marks_overflow'))
+                        <span class="error">{{ $errors->first('marks_overflow')}}</span>
+                    @endif
+                </div>
                 <div class="section-parts">
                     
                     @foreach ($grade_sections as $index => $gradeSection)
@@ -49,6 +69,8 @@
                         
                     @endforeach
                 </div>
+
+           
             </div>
             
             <div class="comment-container">
@@ -84,7 +106,7 @@
 
                     @foreach ($students as $student)
                         <div class="group-member">
-                            <div class="name">{{$student['student']->first_name}} {{$student['student']->first_name}}</div>
+                            <div class="name">{{$student['student']->first_name}} {{$student['student']->last_name}}</div>
                             <div class="contribution">{{$student['contribution']->percentage}}</div>    
                             @php
                                 $contribution_percentage = $student['contribution']->percentage;
