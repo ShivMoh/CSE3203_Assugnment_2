@@ -37,6 +37,7 @@
                     </div>
                 </div>
                 <form action="/assignment-add" method="get">
+                    <input type="hidden" name="type" value="add">
                     <button type="submit" class="add-more">
                         Add More <i class="fa-solid fa-arrow-right"></i>
                     </button>

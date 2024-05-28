@@ -69,6 +69,7 @@
                         <form action="/view" method="post">
                             @csrf
                             <input type="hidden" name="course_id" value="{{$course->id}}">
+                            <input type="hidden" name="course-page" value="smth">
                             <div class="course-arrow">
                                 <button type="submit" class="ghost-btn">
                                     <i class="fa fa-arrow-right"></i>

@@ -26,7 +26,7 @@ class Assessment extends Model
         'id' => 'string',
         'title' => 'string',
         'description' => 'string',
-        'total_marks'=> 'string',
+        'total_marks'=> 'float',
         'course_weight' => 'float',
         'course_id' => 'string',
         'category_id' => 'string'

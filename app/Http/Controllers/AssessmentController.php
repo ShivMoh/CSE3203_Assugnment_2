@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\Assessment;
@@ -15,32 +16,64 @@ class AssessmentController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index(Request $request)
+    // {
+    //     $assessments = [];
+    //     /* Searching */
+    //     if (($request->has('search')) && (filled($request->input('search'))) ){
+    //         $assessments = $this->getAssessmentByName($request->input('search'));
+    //     }
+    //     /* Directed from Courses */
+    //     elseif ((Session::has('course_id'))) {
+    //         $courseId = Session::get('course_id');
+    //         $assessments = $this->getAssessmentByCourseId($courseId);
+    //     }
+    //     else{
+    //         $assessments = $this->getAllAssessments();
+    //     }
+
+    //     return view('assignments.assignment', ['content'=>$assessments]);
+    // }
+
     public function index(Request $request)
     {
         $assessments = [];
-        /* Searching */
-        if (($request->has('search')) && (filled($request->input('search'))) ){
+
+        // Check if the request is a search request
+        if ($request->has('search') && filled($request->input('search'))) {
             $assessments = $this->getAssessmentByName($request->input('search'));
         }
-        /* Directed from Courses */
+        // Check if the session has a course_id
         elseif (Session::has('course_id')) {
-            $courseId = Session::get('course_id');
-            $assessments = $this->getAssessmentByCourseId($courseId);
+            // Check if the referer was the 'courses' route
+            if ($request->headers->get('referer') && str_contains($request->headers->get('referer'), route('courses'))) {
+                $courseId = Session::get('course_id');
+                $assessments = $this->getAssessmentByCourseId($courseId);
+            } else {
+                // If the referer is not from 'courses', you might want to handle it differently
+                // For example, you could ignore the course_id in the session
+                $assessments = $this->getAllAssessments();
+            }
         }
-        else{
+        // Default to getting all assessments if no search or course_id is found
+        else {
             $assessments = $this->getAllAssessments();
         }
 
-        return view('assignments.assignment', ['content'=>$assessments]);
+        return view('assignments.assignment', ['content' => $assessments]);
     }
 
 
-    public function viewAdd(){
+    public function viewAdd(Request $request){
+        $assessment = $this->getCurrentAssessment();
+        $type = $request->input('type');
         $categories = $this->getAllCategories();
         $courses = $this->getAllCourses();
         return view('assignments.assignment-add', [
             'categories' => $categories,
-            'courses'=>$courses
+            'courses'=>$courses,
+            'type'=>$type,
+            'assessment'=>$assessment
         ]);
     }
 
@@ -123,14 +156,28 @@ class AssessmentController extends Controller
 
     /* Getters */
 
+
     private function getAllAssessments(){
-        return Assessment::orderBy('id', 'ASC')->get();
+        $courses = $this->getAllCourses();
+        $courseIds = [];
+    
+        foreach ($courses as $course) {
+            $courseIds[] = $course->id;
+        }
+    
+        return Assessment::whereIn('course_id', $courseIds)->orderBy('id', 'ASC')->get();
     }
+    
+    
     private function getAllCategories(){
         return Category::orderBy('id', 'ASC')->get();
     }
     private function getAllCourses(){
-        return Course::orderBy('id', 'ASC')->get();
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $courses = Course::where("user_id", $user_id)->orderBy('id', 'asc')->get();
+        return $courses;
     }
 
     private function getAssessmentByName($name){
@@ -142,6 +189,18 @@ class AssessmentController extends Controller
         $assessment = Assessment::where('id', $id)->get()->first();
         return $assessment;
     }
+
+    private function getCurrentAssessment()
+    {
+        // Retrieve the assessment ID from the session
+        $assessmentId = Session::get('assessment_id');
+
+        // Query the database to get the assessment with the retrieved ID
+        $assessment = Assessment::where('id', $assessmentId)->first();
+
+        return $assessment;
+    }
+
 
     private function getAssessmentbyCourseId($course_id){
         return Assessment::where('course_id', $course_id)->get();

@@ -1,4 +1,4 @@
-@vite(['resources/css/app.css','resources/css/assignments.css'])
+@vite(['resources/css/app.css','resources/css/assignments.css', 'resources/css/app.css'])
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -8,31 +8,68 @@
 <body>
     <x-nav></x-nav>
     <div class="main-content">
-        <h1 class="title">Add Assignment</h1>
+        <h1 class="title">
+            @if ($type == 'edit')
+                Edit Assignment
+            @endif
+            @if ($type == 'add')
+                Add Assignment
+            @endif
+        
+        </h1>
         <div class="assignment-add-form">
 
-            <form action="/assignment-add" method="POST">
+
+            <form action="/assignment-{{$type}}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="title">Title:</label>
-                    <input type="text" name="title" id="title" class="form-control" placeholder="Enter Assignment Title" required>
+                    @if ($type=='add')
+                        <input
+                        type="text" 
+                        name="title" 
+                        id="title" 
+                        class="form-control" 
+                        placeholder="Enter Assignment Title" 
+                        required>
+                    @elseif ($type=='edit')
+                    
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="desc">Description:</label>
-                    <textarea type="long-text" name="desc" id="desc" class="form-control" placeholder="Description" required></textarea>
+                    <textarea 
+                    type="long-text" 
+                    name="desc" 
+                    id="desc" 
+                    class="form-control" 
+                    placeholder="Description" 
+                    required></textarea>
                 </div>
                 <div class="form-group">
                     <label for="marks">Total Marks:</label>
-                    <input type="text" name="marks" id="marks" required>
+                    <input 
+                    type="float" 
+                    name="marks" 
+                    id="marks" 
+                    required>
                 </div>
                 <div class="form-group">
                     <label for="weight">Course Weight:</label>
-                    <input type="number" name="weight" id="weight" required>
+                    <input 
+                    type="number" 
+                    name="weight" 
+                    id="weight" 
+                    required>
                 </div>
 
                 <div class="form-group">
                     <label for="course_id">Course:</label>
-                    <select name="course_id" id="course_id" class="form-control" required>
+                    <select 
+                    name="course_id" 
+                    id="course_id" 
+                    class="form-control" 
+                    required>
                         @foreach($courses as $course)
                             <option value="{{ $course->id }}">{{ $course->name }}</option>
                         @endforeach
@@ -40,7 +77,11 @@
                 </div>
                 <div class="form-group">
                     <label for="category_id">Category:</label>
-                    <select name="category_id" id="category_id" class="form-control" required>
+                    <select 
+                    name="category_id" 
+                    id="category_id" 
+                    class="form-control" 
+                    required>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach

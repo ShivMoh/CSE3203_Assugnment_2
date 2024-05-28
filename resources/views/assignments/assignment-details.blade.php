@@ -1,4 +1,4 @@
-@vite(['resources/css/app.css','resources/css/assignments.css'])
+@vite(['resources/css/app.css','resources/css/assignments.css', 'resources/css/app.css'])
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -11,7 +11,16 @@
         <section class="details">
             <div class="row">
                 <h1 class="heading">{{$assessment->title}}</h1>
-                <i class="fa-regular fa-pen-to-square"></i>
+                <div class="edit-btn">
+                    <form action="/assignment-add" method="get">
+                        @csrf
+                        <input type="hidden" name="type" value="edit">
+                        <button type="submit" class="ghost-btn">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </button>
+                    </form>
+
+                </div>
             </div>
             <p>{{$assessment->description}}</p>       
            
