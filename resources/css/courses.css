@@ -1,12 +1,11 @@
 body {
     font-family: 'Quicksand', sans-serif;
-    background-color: #F5F5F5;
     margin: 0;
-    padding: 0;
+    /* padding: 280px; */
 }
 .main-content {
-    margin-top: 15px;
-    padding: 96px 192px;
+    margin-top: 116px;
+    padding: 96px 192px 96px 192px;
 }
 .title {
     font-size: 48px;
@@ -14,42 +13,7 @@ body {
     font-weight: 500;
     text-transform: uppercase;
 }
-.search-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-}
-.search-bar {
-    width: 400px;
-    padding: 8px;
-    border: 1px solid #6A4200;
-    border-radius: 8px;
-}
-.button-container {
-    display: flex;
-    align-items: center;
-}
-.button-container button {
-    margin-left: 8px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-.button-container .ghost-btn {
-    border-radius: 50px;
-}
-.button-container .fa {
-    color: #6A4200;
-}
-.add-more {
-    background-color: #6A4200;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
+
 .assignment-preview-body {
     background-color: #ECDCAB;
     color: #6A4200;
@@ -63,6 +27,7 @@ body {
     align-items: center;
 }
 .course-container {
+    margin-left: -20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
