@@ -34,4 +34,10 @@ class CommentController extends Controller
         return $comment;
     }
 
+    public function update_comment($model, $comment) {
+        $model->comment = $comment;
+        $model->save();
+        return;
+    }
+
 }

@@ -11,4 +11,10 @@ class ContributionController extends Controller
         $contributions = Contribution::where('group_id', $group_id)->get();
         return $contributions;
     }
+
+    public function update_percentage($model, $percentage) {
+        $model->percentage = $percentage;
+        $model->save();
+        return;
+    }
 }

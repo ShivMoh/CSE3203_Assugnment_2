@@ -29,7 +29,6 @@ class GradeController extends Controller
         $validator = Validator::make($request->all(), [
             'group_id'=>'required | string',
         ]);
-
  
         if( $validator->fails() && empty(session('group')) || $request->isMethod('GET') && empty(session('group'))) {
             return redirect()->route('group-reports')->withErrors($validator)->withInput();
@@ -140,6 +139,12 @@ class GradeController extends Controller
             "students"=>$students
         ];
     }
+
+    private function update_grade_section($model, $marks_attained) {
+        $model->marks_attained = $marks_attained;
+        $model->save();
+        return;
+    }
     
     public function import_grades(Request $request) {
 
@@ -194,16 +199,17 @@ class GradeController extends Controller
         $group_id = $request->input('group_id');
       
         $data = $this->get_data($group_id);
-        $data['comment']->comment = $excel_data[0][2][$comment_index];
-        $data['comment']->save();
+        (new CommentController)->update_comment($data['comment'], $excel_data[0][2][$comment_index]);
         $x = 0;
         for ($i=2; $i < count($data['students']) + 2; $i++) { 
-            $data['students'][$x]['contribution']->percentage = $excel_data[0][$i][$contribution_award_index];
-            $data['students'][$x]['student']->first_name = $excel_data[0][$i][2];
-            $data['students'][$x]['student']->last_name = $excel_data[0][$i][1];
-            $data['students'][$x]['student']->usi = $excel_data[0][$i][3];
-            $data['students'][$x]['contribution']->save();
-            $data['students'][$x]['student']->save();
+            (new ContributionController)->update_percentage($data['students'][$x]['contribution'], 
+                                                $excel_data[0][$i][$contribution_award_index]);
+
+            (new StudentController)->update_bio_data(   $data['students'][$x]['student'], 
+                                                        $excel_data[0][$i][2],
+                                                        $excel_data[0][$i][1],
+                                                        $excel_data[0][$i][3]
+                                                    );     
             $x++;
         }
 
@@ -211,9 +217,9 @@ class GradeController extends Controller
 
         foreach ($data['grade_sections'] as $key => $grade_section) {
             if((float) $excel_data[0][2][$start] > (float) $data['sections'][$key]->marks_allocated) {
-                $grade_section->marks_attained = $data['sections'][$key]->marks_allocated;
+                $this->update_grade_section($grade_section, $data['sections'][$key]->marks_allocated);
             } else {
-                $grade_section->marks_attained = $excel_data[0][2][$start];
+                $this->update_grade_section($grade_section, $excel_data[0][2][$start]);
             }
             $start++;
             $grade_section->save();

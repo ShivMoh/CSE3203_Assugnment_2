@@ -35,4 +35,13 @@ class StudentController extends Controller
         return $contribution_plus_students;
     }
 
+    public function update_bio_data($model, $first_name, $last_name, $usi) {
+        $model->first_name = $first_name;
+        $model->last_name = $last_name;
+        $model->usi = $usi;
+
+        $model->save();
+        return; 
+    }
+
 }
