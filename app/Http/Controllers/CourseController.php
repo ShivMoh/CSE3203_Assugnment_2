@@ -12,13 +12,22 @@ class CourseController extends Controller
 {
     public function get_all_courses() {
 
+        $courses = $this->retrieve_all_courses();
+        return view('courses/courses', [
+            'courses' => $courses
+        ]);
+    }
+
+    public function retrieve_all_courses() {
         $user = Auth::user();
         $user_id = $user->id;
 
         $courses = Course::where("user_id", $user_id)->orderBy('id', 'asc')->get();
-        return view('courses/courses', [
-            'courses' => $courses
-        ]);
+        return $courses;
+    }
+
+    public function get_course($course_id) {
+        return Course::where("id", $course_id)->get()[0];
     }
 
     public function addCourse(Request $request)
