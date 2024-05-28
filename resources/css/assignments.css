@@ -4,6 +4,9 @@
     padding: 96px 192px 96px 192px;
 }
 
+.hidden {
+    display: none;
+}
 .row{
     display: flex;
     justify-content: space-between;

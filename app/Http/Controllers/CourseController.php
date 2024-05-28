@@ -47,6 +47,10 @@ class CourseController extends Controller
         ]);
     }
 
+    public function getCoursePublic($id){
+        return $this->getCourseById($id);
+    }
+
     private function getCourseById($id){
         $course = Course::where('id', $id)->get()->first();
         return $course;
