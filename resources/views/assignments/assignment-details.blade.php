@@ -44,10 +44,11 @@
             </div>
 
             @if ($errors->any())
-                @foreach ($errors as $error)
+                @foreach ($errors->all() as $error)
                 <p style="color: red;"> {{$error}}</p>
                 
                 @endforeach
+                
             @endif
             
             <div class="parts">

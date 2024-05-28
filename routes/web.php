@@ -52,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/assignment-add', [AssessmentController::class, 'addAssessment']);
     Route::get('/assignment-update', [AssessmentController::class, 'viewUpdate']);
     Route::post('/assignment-update', [AssessmentController::class, 'updateAssessment']);
-    Route::post('/assignment-section-add', [AssessmentController::class, 'addSection']);
+    Route::get('/assignment-section-add', [AssessmentController::class, 'addSection']);
     Route::post('/assignment-section-add', [AssessmentController::class, 'addSection']);
     Route::post('/delete-assignment', [AssessmentController::class, 'deleteAssessmentById']);
     Route::post('/delete-section', [SectionController::class, 'deleteSectionById']);

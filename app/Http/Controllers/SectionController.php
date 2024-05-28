@@ -35,6 +35,7 @@ class SectionController extends Controller
 
     public function addSection($name, $marks)
     {
+        Session::forget('errors');
         // Get the assessment ID from the session
         $assessmentId = Session::get('assessment_id');
 
@@ -66,6 +67,7 @@ class SectionController extends Controller
         $section->assessment_id = $assessmentId;
         $section->save();
 
+        
         // Redirect back with success message
         return redirect()->route('assessment-details')->with('success', 'Section added successfully.');
     }
