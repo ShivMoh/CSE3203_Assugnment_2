@@ -152,8 +152,7 @@ class GradeController extends Controller
         $assessment = Assessment::where("id", $grade->assessment_id)->get()[0];
         $comment = $this->create_if_not_exist_comment($grade->id);
         $sections = Section::where('assessment_id', $assessment->id)->orderBy("id", "asc")->get();
-        $group_controller = new GroupController();
-        $students = $group_controller->get_all_students($group_id);
+        $students = (new StudentController)->get_students_for_group($group_id);
         return [
             "comment"=>$comment,
             "group"=>$group,
