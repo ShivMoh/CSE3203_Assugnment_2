@@ -17,14 +17,15 @@ class AssessmentController extends Controller
      */
     public function index(Request $request)
     {
+        $assessments = [];
         /* Searching */
-        if (!empty($request->input('search'))){
+        if (($request->has('search')) && (filled($request->input('search'))) ){
             $assessments = $this->getAssessmentByName($request->input('search'));
         }
         /* Directed from Courses */
-        /* Check to make sure it's named course_id */
-        else if (!empty($request->input('course_id'))){
-            $assessments = $this->getAssessmentByCourseId($request->input('course_id'));
+        elseif (Session::has('course_id')) {
+            $courseId = Session::get('course_id');
+            $assessments = $this->getAssessmentByCourseId($courseId);
         }
         else{
             $assessments = $this->getAllAssessments();
@@ -32,6 +33,7 @@ class AssessmentController extends Controller
 
         return view('assignments.assignment', ['content'=>$assessments]);
     }
+
 
     public function viewAdd(){
         $categories = $this->getAllCategories();
@@ -132,7 +134,7 @@ class AssessmentController extends Controller
     }
 
     private function getAssessmentByName($name){
-        $assessments = Assessment::where('name', 'like', '%'.$name.'%')->get();
+        $assessments = Assessment::where('title', 'like', '%'. $name .'%')->get();
         return $assessments;
     }
 

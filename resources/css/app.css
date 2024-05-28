@@ -62,6 +62,15 @@ hr{
   justify-content: left;
 }
 
+.button-container{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.button-container button{
+  margin-left: 8px;
+}
+
 .add-more{
   height: 45px;
   background-color: #6A4200;

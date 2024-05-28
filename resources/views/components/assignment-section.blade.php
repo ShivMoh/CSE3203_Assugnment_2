@@ -10,9 +10,10 @@
         <div class="row">
             <h3>{{$details->title}}</h3>
             <div class="section-preview-form">
-                <form  action="" method="POST">
+                <form  action="/delete-section" method="POST">
                     @csrf
                     <!-- delete -->
+                    <input type="hidden" name="id" value="{{$details->id}}">
                     <button type="submit" class="ghost-btn">
                         <i class="fa fa-solid fa-lg fa-x" style="color:#ffffff; width: 10px; height: 10px;"></i>                        
                     </button>
