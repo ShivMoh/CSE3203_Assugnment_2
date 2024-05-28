@@ -79,13 +79,13 @@
   .parts{
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: start;
   }
 
   .section-parts{
     width: auto;
     display: flex;
-    justify-content: flex-start;
+    justify-content: start;
     flex-wrap: wrap;
   }
 

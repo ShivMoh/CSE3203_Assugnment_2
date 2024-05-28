@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
-
 use Illuminate\Http\Request;
 use App\Models\Assessment;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\Section;
-use PHPUnit\Framework\Constraint\IsEmpty;
 
 
 class AssessmentController extends Controller
 {
-    //TODO
     /**
      * Display a listing of the resource.
      */
@@ -47,7 +43,6 @@ class AssessmentController extends Controller
 
     public function addAssessment(Request $request)
     {
-        Log::info('Started');
         $request->validate([
             'title' => 'required|string',
             'desc' => 'required|string',
@@ -56,7 +51,6 @@ class AssessmentController extends Controller
             'course_id' => 'required|string',
             'category_id' => 'required|string'
         ]);
-        Log::info('Validated');
 
         $assessment = Assessment::create([
             'id' => Str::uuid(),
@@ -67,50 +61,23 @@ class AssessmentController extends Controller
             'course_id' => $request->course_id,
             'category_id' => $request->category_id
         ]);
-        Log::info('Saved');
-
 
         return redirect()->route('assignments');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function viewAssessmentDetail(Request $request){
+        $assessment = $this->getAssessmentById($request->input('id'));
+        $sections = $this->getAssessmentSections($request->input('id'));
+        return view('assignments.assignment-details',[
+            'assessment'=>$assessment,
+            'sections'=>$sections
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function addSection(Request $request){
+        $sectionController = new SectionController;
+        $sectionController->addSection($request);
+        $this->viewAssessmentDetail($request);
     }
 
     /* Getters */
@@ -130,7 +97,16 @@ class AssessmentController extends Controller
         return $assessments;
     }
 
+    private function getAssessmentById($id){
+        $assessment = Assessment::where('id', $id)->get()->first();
+        return $assessment;
+    }
+
     private function getAssessmentbyCourseId($course_id){
         return Assessment::where('course_id', $course_id)->get();
+    }
+
+    private function getAssessmentSections($assessment_id){
+        return Section::where('assessment_id', $assessment_id)->get();
     }
 }
