@@ -20,7 +20,9 @@ Ensure the required PHP extensions are installed and enabled. Uncomment the nece
 
 ##### Ubuntu Installation
 Run the following command to install the necessary extensions on an Ubuntu-based system:
-``` sudo apt install php-zip php-xml php8.1-gd php8.1-iconv php8.1-simplexml php8.1-xmlreader php-zip```
+```
+sudo apt install php-zip php-xml php8.1-gd php8.1-iconv php8.1-simplexml php8.1-xmlreader php-zip
+```
 Installation generally follows: php-[package_name] or php[php_version_number]-[package_name]
 
 ##### Windows Installation
