@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\Group;
 use App\Models\Contribution;
@@ -44,7 +45,15 @@ class GroupController extends Controller
         }
 
         // this should be retrieved from the session
-        $course_id = "a4891a81-e1aa-4588-bdb9-9b46028347d4";
+
+        if(Session::has("course_id")) {
+            $course_id = Session::get('course_id');
+        } else {
+            // should never occur but just in case
+            // we'll take the first retrieved course
+            // to avoid breaking the website
+            $course_id = Course::all()[0]->id;
+        }
 
         $assessments = Assessment::where("course_id", $course_id)->get();
         
@@ -70,6 +79,12 @@ class GroupController extends Controller
 
 
         $group_id = $request->input('group_id');
+        $group = Group::where("id", $request->input('group_id'))->get()[0];
+
+        if(!$group->exists()) {
+            abort(404, 'Cannot delete group.');
+        }
+
         $contributions = Contribution::where("group_id", $group_id)->get();
 
         foreach ($contributions as $contribution) {
@@ -77,8 +92,8 @@ class GroupController extends Controller
             $contribution->delete();
         }
         
-        $group = Group::where("id", $request->input('group_id'))->get();
-        Grade::where("id", $group[0]->grade_id)->delete();
+        // $group = Group::where("id", $request->input('group_id'))->get();
+        Grade::where("id", $group->grade_id)->delete();
 
         return redirect()->route('group-reports');
 

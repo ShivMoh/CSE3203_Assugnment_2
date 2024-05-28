@@ -8,6 +8,8 @@ use App\Imports\UsersImport;
 use App\Exports\ArrayExport;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+
 
 use App\Models\Group;
 use App\Models\Contribution;
@@ -203,31 +205,42 @@ class GradeController extends Controller
             return redirect()->route('edit-grades')->withErrors(['sections_overflow' => 'Excel data does not match current assessment structure'])->withInput();
         }
         
-        (new CommentController)->update_comment($data['comment'], $excel_data[0][2][$comment_index]);
-        $x = 0;
-        for ($i=2; $i < count($data['students']) + 2; $i++) { 
-            (new ContributionController)->update_percentage($data['students'][$x]['contribution'], 
-                                                $excel_data[0][$i][$contribution_award_index]);
+        DB::beginTransaction();
 
-            (new StudentController)->update_bio_data(   $data['students'][$x]['student'], 
-                                                        $excel_data[0][$i][2],
-                                                        $excel_data[0][$i][1],
-                                                        $excel_data[0][$i][3]
-                                                    );     
-            $x++;
-        }
+        try {
+            (new CommentController)->update_comment($data['comment'], $excel_data[0][2][$comment_index]);
+            $x = 0;
+            for ($i=2; $i < count($data['students']) + 2; $i++) { 
+                (new ContributionController)->update_percentage($data['students'][$x]['contribution'], 
+                                                    $excel_data[0][$i][$contribution_award_index]);
 
-        $start = $sections_start_index;
-
-        foreach ($data['grade_sections'] as $key => $grade_section) {
-            if((float) $excel_data[0][2][$start] > (float) $data['sections'][$key]->marks_allocated) {
-                $this->update_grade_section($grade_section, $data['sections'][$key]->marks_allocated);
-            } else {
-                $this->update_grade_section($grade_section, $excel_data[0][2][$start]);
+                (new StudentController)->update_bio_data(   $data['students'][$x]['student'], 
+                                                            $excel_data[0][$i][2],
+                                                            $excel_data[0][$i][1],
+                                                            $excel_data[0][$i][3]
+                                                        );     
+                $x++;
             }
-            $start++;
-            $grade_section->save();
+
+            $start = $sections_start_index;
+
+            foreach ($data['grade_sections'] as $key => $grade_section) {
+                if((float) $excel_data[0][2][$start] > (float) $data['sections'][$key]->marks_allocated) {
+                    $this->update_grade_section($grade_section, $data['sections'][$key]->marks_allocated);
+                } else {
+                    $this->update_grade_section($grade_section, $excel_data[0][2][$start]);
+                }
+                $start++;
+                $grade_section->save();
+            }
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            redirect()->back()->withInput()->withErrors(['structure_error' => 'Excel data structure is not supported']);
         }
+        
 
         return redirect()->back()->withInput();
     }
@@ -280,7 +293,7 @@ class GradeController extends Controller
         array_push($data_arr, $headings);
         for ($i=0; $i < $group_length; $i++) { 
             $arr = array();
-            array_push($arr, $i);
+            array_push($arr, $i + 1);
             array_push($arr, $data['students'][$i]['student']->last_name);
             array_push($arr, $data['students'][$i]['student']->first_name);
             array_push($arr, $data['students'][$i]['student']->usi);

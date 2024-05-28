@@ -63,6 +63,10 @@
                     @endif
                     @if ($errors->has('sections_overflow'))
                     <span class="error">{{ $errors->first('sections_overflow')}}</span>
+                    @endif
+
+                    @if ($errors->has('structure_error'))
+                    <span class="error">{{ $errors->first('structure_error')}}</span>
                 @endif
                 </div>
                 <div class="section-parts">
