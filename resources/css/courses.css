@@ -132,3 +132,41 @@ button:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
+
+.course-add-form .form-group {
+    margin-bottom: 20px;
+    display: block; 
+}
+
+.course-add-form .form-group label {
+    display: block; 
+    margin-bottom: 8px ;
+
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.course-add-form .form-group input,
+.course-add-form .form-group textarea,
+.course-add-form .form-group select {
+    width: 100%; 
+
+    border: solid 1px #6A4200;
+    border-radius: 3px;
+
+    padding: 8px;
+
+    font-family: 'Quicksand', sans-serif;
+}
+
+.course-add-form .form-group textarea {
+    resize: vertical; 
+}
+
+/* Ensure text content aligns to the left */
+.course-add-form .form-group label,
+.course-add-form .form-group input,
+.course-add-form .form-group textarea,
+.course-add-form .form-group select {
+    text-align: left;
+}
