@@ -38,7 +38,7 @@ class GroupController extends Controller
         } else if (!empty($request->input('assessments'))) {
             $groups = $this->get_all_groups_for_assessment($request->input('assessments'));
             $assessment_id = $request->input('assessments');
-            $assessment = Assessment::where("id", $assessment_id)->get()[0];          
+            $assessment = (new AssessmentController)->getAssessmentById($assessment_id);         
             session('course')['assessment'] = $assessment;
         }else if (!empty($request->input('courses'))) {
             $groups = $this->get_all_groups_for_course($request->input('courses'));
@@ -67,9 +67,7 @@ class GroupController extends Controller
                 if (!Session::has("course")) {
                     session([
                         'course' => [
-                            'course_id' => $course_id,
-                            'assessment' => null,
-                            'course' => null
+                            'course_id' => $course_id
                         ]
                     ]);
                 } else {
@@ -83,7 +81,7 @@ class GroupController extends Controller
             
         }
 
-        $assessments = Assessment::where("course_id", $course_id)->get();
+        $assessments = (new AssessmentController)->getAssessmentByCourseId($course_id);
         $course = (new CourseController)->get_course($course_id);
         
         return view(

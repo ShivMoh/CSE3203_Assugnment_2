@@ -211,7 +211,7 @@ class AssessmentController extends Controller
         return $assessments;
     }
 
-    private function getAssessmentById($id){
+    public function getAssessmentById($id){
         $assessment = Assessment::where('id', $id)->get()->first();
         return $assessment;
     }
@@ -228,7 +228,7 @@ class AssessmentController extends Controller
     }
 
 
-    private function getAssessmentbyCourseId($course_id){
+    public function getAssessmentbyCourseId($course_id){
         return Assessment::where('course_id', $course_id)->get();
     }
 

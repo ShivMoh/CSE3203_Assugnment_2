@@ -4,13 +4,36 @@
     padding: 96px 192px 96px 192px;
 }
 
+.input-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+    width: 100%;
+}
+
+.input-container label {
+
+    margin-top: -20px;
+}
+
+.search-bottom {
+    margin-top: 50px!important;
+}
+
+strong {
+    font-weight: 800;
+}
+
+.info {
+    font-weight: 600;
+}
 .filter-select {
-    width: 100px;
+    width: 200px;
     border-radius: 3px;
     border: solid 1px #6A4200;
     margin-right: 8px;
     height: 48px;
-  
+    
   }
 
 .row{
