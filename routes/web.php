@@ -92,8 +92,14 @@ Route::middleware(['auth'])->group(function () {
     
 
     Route::get('/courses', function () {
-        return view('/courses');
+        return view('/courses/courses');
     });
+    // Route::get('/courses-add', function () {
+    //     return view('/courses/courses-add');
+    // });
+    Route::get('/courses-add', [CourseController::class, 'viewAdd']);
+    Route::post('/courses-add', [CourseController::class, 'addCourse']);
+    Route::post('/delete-course', [CourseController::class, 'deleteCourseById']);
 });
 
 
@@ -119,3 +125,7 @@ Route::post('/import-grades', [GradeController::class, 'import_grades'])->name('
 Route::view('/file', 'groups/test');
 
 Route::post('/export_grades', [GradeController::class, 'export_grades'])->name('export_grades');
+
+Route::get('/courses-add', function () {
+    return view('/courses/courses-add');
+});

@@ -34,7 +34,7 @@
                         <i class="fa fa-solid fa-lg fa-x"></i>
                     </button>
                 </div>
-                <form action="/course-add" method="get">
+                <form action="/courses-add" method="get">
                     <button type="submit" class="add-more">
                         Add More <i class="fa-solid fa-arrow-right"></i>
                     </button>
@@ -45,17 +45,34 @@
             <div class="course-container">
                     @foreach ($courses as $course) 
                     <div class="course-card">
+                        <div class="more-form-btns">
                         <div class="course-info">
-                            <div class="course-name">{{$course->name}}</div>
-                            <div class="course-code">{{$course->code}}</div>
+                            <div class="course-name"><strong>Course name:</strong>{{$course->name}}</div>
+                            <div class="course-code"><strong>Course code:</strong>{{$course->code}}</div>
                         </div>
+                        </div>
+                        <div class="form-btns">
                         <div class="course-arrow">
-                            <i class="fa fa-arrow-right"></i>
-                        </div>     
+                        <form  action="/assignments" method="get">
+                            @csrf
+                            <!-- Forward to assignment detail -->
+                            <input type="hidden" name="id">
+                            <button type="submit" class="ghost-btn">
+                                <i class="fa fa-arrow-right"></i>
+                            </button>
+                        </form>
+                        </div> 
+                        <form  action="/delete-course" method="POST">
+                            @csrf
+                            <!-- delete -->
+                            <input type="hidden" name="course_id" value="{{$course->id}}">
+                            <button type="submit" class="ghost-btn">
+                                <i class="fa fa-solid fa-lg fa-x"></i>                        
+                            </button>
+                        </form>
+                        </div>    
                     </div>
-
                     @endforeach
-                   
             </div>
         </section>
     </div>
