@@ -9,9 +9,10 @@
     <div class="assignment-preview-body">
         <h2>{{$details->title}}</h2>
         <div class="buttons">
-            <form  action="/detail" method="get">
+            <form  action="/detail" method="post">
                 @csrf
                 <!-- Forward to assignment detail -->
+                <input type="hidden" name="id" value="{{$details->id}}">
                 <button type="submit" class="ghost-btn">
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>

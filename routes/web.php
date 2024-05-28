@@ -70,21 +70,18 @@ Route::middleware(['auth'])->group(function () {
         return view('test');
     });
 
-    Route::get('/assignments', function () {
-        return view('/assignments/assignment');
-    });
+    Route::get('/assignments',[AssessmentController::class, 'index'])->name('assignments');
 
     Route::post('/assignments', function () {
         return view('/assignments/assignment');
     });
 
-    Route::post('/detail', function () {
-        return view('/assignments/assignment-details');
-    });
+    Route::post('/detail', [AssessmentController::class, 'viewAssessmentDetail']);
 
-    Route::get('/assignment-add', function () {
-        return view('/assignments/assignment-add');
-    });
+    Route::get('/assignment-add', [AssessmentController::class, 'viewAdd']);
+    Route::post('/assignment-add', [AssessmentController::class, 'addAssessment']);
+    Route::post('/assignment-section-add', [AssessmentController::class, 'addSection']);
+    
 
     Route::get('/courses', function () {
         return view('/courses');

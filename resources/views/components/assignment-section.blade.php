@@ -8,7 +8,7 @@
 <body>
     <div class="assignment-section-body">
         <div class="row">
-            <h3>{Section Name}</h3>
+            <h3>{{$details->title}}</h3>
             <div class="section-preview-form">
                 <form  action="" method="POST">
                     @csrf
@@ -24,7 +24,7 @@
         <hr>
         <div class="row">
             <h3>Marks</h3>
-            <h4>10</h4>
+            <h4>{{$details->marks_allocated}}</h4>
         </div>
 
     </div>
