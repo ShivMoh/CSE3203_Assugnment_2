@@ -43,46 +43,19 @@
         </section>
         <section class="assignment-preview">
             <div class="course-container">
-                <div class="course-card">
-                    <div class="course-info">
-                        <div class="course-name">Sample Course Name</div>
-                        <div class="course-code">CSE3990</div>
-                        <div class="department">Department of Computer Science</div>
+                    @foreach ($courses as $course) 
+                    <div class="course-card">
+                        <div class="course-info">
+                            <div class="course-name">{{$course->name}}</div>
+                            <div class="course-code">{{$course->code}}</div>
+                        </div>
+                        <div class="course-arrow">
+                            <i class="fa fa-arrow-right"></i>
+                        </div>     
                     </div>
-                    <div class="course-arrow">
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-info">
-                        <div class="course-name">Sample Course Name</div>
-                        <div class="course-code">CSE3990</div>
-                        <div class="department">Department of Computer Science</div>
-                    </div>
-                    <div class="course-arrow">
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-info">
-                        <div class="course-name">Sample Course Name</div>
-                        <div class="course-code">CSE3990</div>
-                        <div class="department">Department of Computer Science</div>
-                    </div>
-                    <div class="course-arrow">
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-info">
-                        <div class="course-name">Sample Course Name</div>
-                        <div class="course-code">CSE3990</div>
-                        <div class="department">Department of Computer Science</div>
-                    </div>
-                    <div class="course-arrow">
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </div>
+
+                    @endforeach
+                   
             </div>
         </section>
     </div>

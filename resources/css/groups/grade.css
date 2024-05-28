@@ -141,7 +141,7 @@ h2 {
     width: 100%;
     color: red;
     font-weight: bold;
-    background-color: yellow;
+
     padding: 10px;
     border: solid red 2px;
     text-align: center;
@@ -157,3 +157,58 @@ h2 {
 button:hover {
     cursor: pointer;
 }
+
+.title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 50px;
+}
+
+
+
+.title-container form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 15px;
+}
+
+
+.title-container form button {
+    width: 200px;   
+    height: 30px;
+    border: none;
+    background-color: #c97c00;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+#file::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+
+#file {
+    width: 500px;
+    color: white
+}
+#file::before {
+    content: 'Import Excel';
+    display: inline-block;
+    background-color: #c97c00;
+    border-radius: 3px;
+    padding: 8px 25px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 10pt;
+}
+  #file:hover::before {
+    border-color: black;
+  }
+  #file:active::before {
+    background: #f3a11d;
+  }
