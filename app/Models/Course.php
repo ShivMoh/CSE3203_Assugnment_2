@@ -13,12 +13,14 @@ class Course extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'user_id',
         'id',
         'name',
         'code'
     ];
 
     protected $casts = [
+        'user_id' => 'string',
         'id' => 'string',
         'name' => 'string',
         'code'=> 'string'

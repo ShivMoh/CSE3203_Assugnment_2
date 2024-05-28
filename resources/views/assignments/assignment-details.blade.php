@@ -9,7 +9,10 @@
     <div class="main-content">
     <!-- Add content -->
         <section class="details">
-            <h1 class="heading">{{$assessment->title}}</h1>
+            <div class="row">
+                <h1 class="heading">{{$assessment->title}}</h1>
+                <i class="fa-regular fa-pen-to-square"></i>
+            </div>
             <p>{{$assessment->description}}</p>       
            
         </section>
@@ -79,7 +82,7 @@
                     <button type="submit" id="submit-button" style="display: none;">Submit</button>
                 </form>
 
-                <form  action="/groups" method="get">
+                <form  action="/group-reports" method="get">
                     @csrf
                     <button type="submit" class="add-more">
                         View Group Reports                   

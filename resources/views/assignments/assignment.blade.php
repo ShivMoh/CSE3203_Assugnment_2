@@ -12,17 +12,17 @@
             <hr>
             <div class="search-bottom">
                 <div class="search-container">
-                    <form  action="" method="POST" class="search" id="search">
+                    <form action="/assignments" method="POST" class="search" id="search">
                         @csrf
                         <input 
-                            type="search" 
+                            type="text" 
                             name="search" 
                             id="search-bar"
                             class="search-bar"
                             placeholder="Search..."
                             >
                     </form>
-                    <form  action="" method="POST" id="clear">
+                    <form  action="/assignments" method="POST" id="clear">
                         @csrf
                     </form>
                 
