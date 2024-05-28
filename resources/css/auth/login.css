@@ -122,12 +122,11 @@ button:hover {
 }
 
 .alert-success {
-    margin-top: 25px;
-    background-color: #ddffdd;
-    border-left: 6px solid #4CAF50;
-    padding: 10px;
+    color: #4CAF50;
+    font-weight: bold;
     font-style: italic;
     text-align: left;
+    margin-top: -25px;
 }
 
 .error {
