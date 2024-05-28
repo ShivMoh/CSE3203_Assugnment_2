@@ -173,11 +173,11 @@ class GradeController extends Controller
         $sections_start_index = 4;
         $sections_end_index = count($headings) - 4 - 5;
 
-        // $sections = array_slice(
-        //     $headings,
-        //     $sections_start_index,
-        //     $sections_end_index + 1
-        // );  
+        $sections = array_slice(
+            $headings,
+            $sections_start_index,
+            $sections_end_index + 1
+        );  
 
         // $index = $headings[0];
         // $last_name = $headings[1];
@@ -197,8 +197,12 @@ class GradeController extends Controller
 
     
         $group_id = $request->input('group_id');
-      
         $data = $this->get_data($group_id);
+
+        if(count($data['sections']) != count($sections)) {
+            return redirect()->route('edit-grades')->withErrors(['sections_overflow' => 'Excel data does not match current assessment structure'])->withInput();
+        }
+        
         (new CommentController)->update_comment($data['comment'], $excel_data[0][2][$comment_index]);
         $x = 0;
         for ($i=2; $i < count($data['students']) + 2; $i++) { 
