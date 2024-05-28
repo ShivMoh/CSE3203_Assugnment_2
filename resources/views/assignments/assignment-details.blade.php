@@ -22,7 +22,7 @@
                 <h1>Breakdown</h1>
                 <div class="sections">
                     <h2>Sections</h2>
-                    <form  action="" method="POST">
+                    <form  action="/detail" method="POST">
                         @csrf
                         <!-- add section -->
                         <button type="submit" class="ghost-btn">
@@ -49,7 +49,7 @@
             </div> 
 
             <!-- View if Section Add -->
-
+            @if (request()->isMethod('post'))
             <div class="section-add">
                 <form action="" method="POST">
                     <div class="row form-group">
@@ -67,25 +67,42 @@
                     </button>
                 </form>
             </div>
+            @endif
         </section>
+
+
         <section class="btns">
             <div class="row group-btns">
-                <form  action="" method="POST">
+
+                <!-- Add Group Project Reports to this assignment -->
+
+                <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <!-- add section -->
-                    <button type="submit" class="add-more">
-                        Upload Group Reports                       
+                    <input type="file" name="group_report" id="file-input" accept=".xlsx" required>
+                    <button type="button" id="upload-button" class="add-more">
+                        Upload Group Reports
                     </button>
+                    <button type="submit" id="submit-button" style="display: none;">Submit</button>
                 </form>
-                <form  action="" method="POST">
+
+                <form  action="" method="get">
                     @csrf
-                    <!-- add section -->
                     <button type="submit" class="add-more">
                         View Group Reports                   
                     </button>
                 </form>
             </div>
         </section>
-        </div>
+        
+    </div>
+    <script>
+        document.getElementById('upload-button').addEventListener('click', function() {
+            document.getElementById('file-input').click();
+        });
+
+        document.getElementById('file-input').addEventListener('change', function() {
+            document.getElementById('submit-button').click();
+        });
+    </script>   
 
 </body>
