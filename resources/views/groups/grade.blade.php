@@ -61,6 +61,9 @@
                     @if ($errors->has('marks_overflow'))
                         <span class="error">{{ $errors->first('marks_overflow')}}</span>
                     @endif
+                    @if ($errors->has('sections_overflow'))
+                    <span class="error">{{ $errors->first('sections_overflow')}}</span>
+                @endif
                 </div>
                 <div class="section-parts">
                     
