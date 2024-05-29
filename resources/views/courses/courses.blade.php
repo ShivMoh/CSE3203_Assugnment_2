@@ -1,4 +1,4 @@
-@vite(['resources/css/app.css','resources/css/courses.css','resources/css/app.css'])
+@vite(['resources/css/app.css','resources/css/courses.css'])
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
             <hr>
             <div class="search-bottom">
                 <div class="search-container">
-                    <form action="" method="POST" class="search" id="search">
+                    <form action="courses" method="POST" class="search" id="search">
                         @csrf
                         <input 
                             type="search" 
@@ -24,7 +24,7 @@
                             placeholder="Search..."
                         >
                     </form>
-                    <form action="" method="POST" id="clear">
+                    <form action="courses" method="GET" id="clear">
                         @csrf
                     </form>
                     <div class="button-container">
@@ -45,41 +45,54 @@
             </div>
               
         </section>
-        <section class="assignment-preview">
+
+        <section class="container">
             <div class="course-container">
-                    @foreach ($courses as $course) 
+                @foreach ($courses as $course)
                     <div class="course-card">
                         <div class="more-form-btns">
-                        <div class="course-info">
-                            <div class="course-name"><strong>Course name:</strong>{{$course->name}}</div>
-                            <div class="course-code"><strong>Course code:</strong>{{$course->code}}</div>
+                            <div class="course-info">
+                                <div class="course-name"><strong>Course name:</strong> {{$course->name}}</div>
+                                <div class="course-code"><strong>Course code:</strong> {{$course->code}}</div>
+                            </div>
                         </div>
+                        <div class="course-arrow">
                         </div>
                         <div class="form-btns">
-                        <div class="course-arrow">
-                        <form  action="/delete-course" method="POST">
-                            @csrf
-                            <!-- delete -->
-                            <input type="hidden" name="course_id" value="{{$course->id}}">
-                            <button type="submit" class="ghost-btn">
-                                <i class="fa fa-solid fa-lg fa-x"></i>                        
-                            </button>
-                        </form>
-                        </div>    
-                        <form action="/view" method="post">
-                            @csrf
-                            <input type="hidden" name="course_id" value="{{$course->id}}">
-                            <input type="hidden" name="course-page" value="smth">
                             <div class="course-arrow">
+                                <form action="/delete-course" method="POST">
+                                    @csrf
+                                    <!-- delete -->
+                                    <input type="hidden" name="course_id" value="{{$course->id}}">
+                                    <button type="submit" class="ghost-btn">
+                                        <i class="fa fa-solid fa-lg fa-x"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            <form action="edit-courses" method="GET">
+                                <input type="hidden" name="course_id" value="{{$course->id}}">
                                 <button type="submit" class="ghost-btn">
-                                    <i class="fa fa-arrow-right"></i>
+                                    <i class="fa fa-solid fa-marker"></i>
                                 </button>
-                            </div> 
-                        </form>
-                            
-                    </div>
-                    @endforeach
-            </div>
+                            </form>    
+                            <form action="/view" method="post">
+                                @csrf
+                                <input type="hidden" name="course_id" value="{{$course->id}}">
+                                <input type="hidden" name="course-page" value="smth">
+                                <div class="course-arrow">
+                                    <button type="submit" class="ghost-btn">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </button>
+                                </div> 
+                            </form>
+                        </div>
+                    </div> 
+                @endforeach
+
+                
+    
+                </div>
         </section>
+  
     </div>
 </body>

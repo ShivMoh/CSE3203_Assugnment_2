@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\Assessment;
 use App\Models\Category;
@@ -177,6 +180,72 @@ class AssessmentController extends Controller
 
         // Redirect the user to the assignment details page with a success message
         return redirect()->route('assessment-details');
+    }
+
+    public function import_assessment_structure(Request $request) {
+
+        // for reading back in previously 
+        // requires assessment id --> 
+            // could get that from using one of the students usi
+            // since the same student cannot be in one or more grps per assessment
+
+        $validator = Validator::make($request->all(), [
+            'assignment-structure' => 'required|mimes:xls,xlsx',
+        ]);
+
+        if($validator->fails()) {
+            return redirect()->route('edit-grades')->withErrors($validator)->withInput();
+        }
+
+        $assessment= $this->getCurrentAssessment();
+        
+        $excel_data = Excel::toArray([], $request->file('assignment-structure'));
+        
+        $headings = $excel_data[0][1];
+
+        $total_index = count($headings) - 4;
+        $percentage_index = count($headings) - 3;
+        $contribution_award_index = count($headings) - 2;
+        $comment_index = count($headings) - 1;
+        $sections_start_index = 4;
+        $sections_end_index = count($headings) - 4 - 5;
+
+        $sections = array_slice(
+            $headings,
+            $sections_start_index,
+            $sections_end_index + 1
+        );  
+
+
+        DB::beginTransaction();
+
+        try {
+            
+            foreach($sections as $section) {
+                $sect = explode("-", $section);
+                $section_name = $sect[0];
+                $section_marks_allocated = $sect[1];
+
+                (new SectionController)->createSection($section_name, $section_marks_allocated, $assessment->id);
+            }
+
+            $total = explode("-", $headings[$total_index])[1];
+            $assessment->total_marks = $total;
+
+            $percentage = explode("-", $headings[$percentage_index])[1];
+            $assessment->course_weight = ((float) $percentage / 100);
+
+            $assessment->save();
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            redirect()->back()->withInput()->withErrors(['structure_error' => 'Excel Sheet incorrectly formatted.']);
+        }
+        
+
+        return redirect()->back()->withInput();
     }
 
 

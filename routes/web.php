@@ -50,19 +50,27 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/assignment-add', [AssessmentController::class, 'viewAdd']);
     Route::post('/assignment-add', [AssessmentController::class, 'addAssessment']);
+    Route::post('/assignment-upload', [AssessmentController::class, 'import_assessment_structure']);
+
     Route::get('/assignment-update', [AssessmentController::class, 'viewUpdate']);
     Route::post('/assignment-update', [AssessmentController::class, 'updateAssessment']);
     Route::get('/assignment-section-add', [AssessmentController::class, 'addSection']);
     Route::post('/assignment-section-add', [AssessmentController::class, 'addSection']);
     Route::post('/delete-assignment', [AssessmentController::class, 'deleteAssessmentById']);
     Route::post('/delete-section', [SectionController::class, 'deleteSectionById']);
+    Route::post('/import-new-group', [GroupController::class, 'import']);
     
 
     Route::get('/courses', function () {
         return view('/courses/courses');
     })->name('courses'); 
-    Route::get('/courses-add', [CourseController::class, 'viewAdd']);
+    Route::post('/courses', [CourseController::class, 'searchCourses'])->name('courses');
+
     Route::post('/courses-add', [CourseController::class, 'addCourse']);
+    Route::get('/edit-courses', [CourseController::class, 'viewCourseEditPage']);
+    // Route::post('/edit-courses', [CourseController::class, 'editCourseName'])->name('courses.edit');
+    Route::post('/edit-courses', [CourseController::class, 'editCourseName'])->name('edit-courses');
+    
     Route::post('/delete-course', [CourseController::class, 'deleteCourseById']);
     Route::post('/view', [CourseController::class, 'viewAssignments']);
 });

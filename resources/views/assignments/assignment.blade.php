@@ -42,6 +42,8 @@
                         Add More <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </form>
+                    
+                
             </div>
 
             @if ($errors->any())
@@ -61,4 +63,13 @@
             </div>
         </section>
     </div>
+    <script>
+        document.getElementById('upload-button').addEventListener('click', function() {
+            document.getElementById('file-input').click();
+        });
+
+        document.getElementById('file-input').addEventListener('change', function() {
+            document.getElementById('submit-button').click();
+        });
+    </script>
 </body>

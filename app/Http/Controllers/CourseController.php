@@ -27,7 +27,7 @@ class CourseController extends Controller
     }
 
     public function get_course($course_id) {
-        return Course::where("id", $course_id)->get()[0];
+        return Course::where("id", $course_id)->get()->first();
     }
 
     public function addCourse(Request $request)
@@ -92,6 +92,65 @@ class CourseController extends Controller
 
         // Redirect to the 'assignments' route
         return redirect()->route('assignments');
+    }
+
+    public function searchCourses(Request $request) {
+        $searchTerm = $request->input('search');
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $courses = Course::where('user_id', $user_id)
+            ->where(function ($query) use ($searchTerm) {
+                $query->where('name', 'LIKE', '%' . $searchTerm . '%')
+                      ->orWhere('code', 'LIKE', '%' . $searchTerm . '%');
+            })
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return view('courses/courses', [
+            'courses' => $courses
+        ]);
+    }
+
+    public function editCourseName(Request $request)
+    {
+        $course = $this->getCourseById($request->input('course_id'));
+
+        if (!$course) {
+            return redirect()->back()->with('error', 'Course not found.');
+        }
+
+        if ($request->isMethod('post')) {
+            $request->validate([
+                'name' => 'required|string',
+                'code' => 'required|string'
+            ]);
+
+            $course->name = $request->input('name');
+            $course->code = $request->input('code');
+            $course->save();
+
+            return redirect()->intended('/courses')->with('success', 'Course updated successfully.');
+        }
+
+        return view('courses/edit-courses');
+    }
+
+    public function viewCourseEditPage(Request $request)
+    {
+        $request->validate([
+            'course_id' => 'required'
+        ]);
+
+        $course = $this->getCourseById($request->input('course_id'));
+
+        if (!$course) {
+            return redirect()->back()->with('error', 'Course not found.');
+        }
+
+        return view('courses/edit-courses', [
+            'course' => $course
+        ]);
     }
 
 }
