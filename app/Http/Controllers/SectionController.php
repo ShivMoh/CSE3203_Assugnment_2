@@ -103,7 +103,7 @@ class SectionController extends Controller
             'marks_allocated' => $marks_allocated,
             'assessment_id'=>$assessment_id
         ]);
-    }
+    
     }
 
     private function getSectionById($id){
