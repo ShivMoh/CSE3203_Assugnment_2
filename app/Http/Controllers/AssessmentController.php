@@ -198,6 +198,12 @@ class AssessmentController extends Controller
         }
 
         $assessment= $this->getCurrentAssessment();
+
+        $db_sections = (new SectionController)->getAllSectionsForAssessment($assessment->id);
+
+        foreach ($db_sections as $sec) {
+            $sec->delete();
+        }
         
         $excel_data = Excel::toArray([], $request->file('assignment-structure'));
         

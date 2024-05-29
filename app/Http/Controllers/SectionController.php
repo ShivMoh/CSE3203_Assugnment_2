@@ -106,7 +106,13 @@ class SectionController extends Controller
     
     }
 
+    public function getAllSectionsForAssessment($assessment_id) {
+        return Section::where("assessment_id", $assessment_id)->get();
+    }
+
     private function getSectionById($id){
         return Section::where('id', $id)->first();
     }
+
+ 
 }
