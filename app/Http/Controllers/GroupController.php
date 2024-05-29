@@ -138,6 +138,7 @@ class GroupController extends Controller
     
         $courses = array();
         $course_id = "";
+        $error = "here";
         if(empty($request->input('courses'))) {
          
             // we'll take the first retrieved course as the default
@@ -153,22 +154,33 @@ class GroupController extends Controller
             } else {
                 $course_id = session('course')['course_id'];
             }
+
+            $error = "Empty courses";
             
         } else {
             $courses = (new CourseController)->retrieve_all_courses();
             $course_id = $request->input('courses');
-            session('course')['course_id'] = $course_id;
-            
-        }
+            // session('course')['course_id'] = $course_id;
+            session()->put('course', [
+                'course_id' => $course_id
+            ]);
+            $error = "Non empty course";
 
+        }
 
         $assessments = (new AssessmentController)->getAssessmentByCourseId($course_id);
-
         
         $course = (new CourseController)->get_course($course_id);
+
         if (!$course) {
             $course = $courses[0];
-        }
+            //session('course')['course_id'] = $course->id;
+            session()->put('course', [
+                'course_id' => $course->id
+            ]);
+            $error = "Course object is empty";
+        } 
+      
 
         return view(
             'groups/group-reports',
