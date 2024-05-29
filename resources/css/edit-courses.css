@@ -1,0 +1,79 @@
+.course-add-form {
+    background-color: #ECDCAB;
+    color: #6A4200;
+    padding: 48px;
+    margin-top: 48px;
+    border-radius: 9px;
+    box-shadow: 0 0 45px 3px rgba(0, 0, 0, 0.1);
+}
+
+.course-add-form form {
+    width: 100%;
+}
+
+.course-add-form .form-group {
+    margin-bottom: 20px;
+    display: block;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fa {
+    color: #6A4200;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.button-container button {
+    margin-left: 8px;
+}
+
+button {
+    transition: all linear 0.2s;
+}
+
+button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.course-add-form .form-group {
+    margin-bottom: 20px;
+    display: block;
+}
+
+.course-add-form .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.course-add-form .form-group input,
+.course-add-form .form-group textarea,
+.course-add-form .form-group select {
+    width: 100%;
+    border: solid 1px #6A4200;
+    border-radius: 3px;
+    padding: 8px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.course-add-form .form-group textarea {
+    resize: vertical;
+}
+
+/* Ensure text content aligns to the left */
+.course-add-form .form-group label,
+.course-add-form .form-group input,
+.course-add-form .form-group textarea,
+.course-add-form .form-group select {
+    text-align: left;
+}
