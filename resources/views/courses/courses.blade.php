@@ -14,7 +14,7 @@
             <hr>
             <div class="search-bottom">
                 <div class="search-container">
-                    <form action="" method="POST" class="search" id="search">
+                    <form action="courses" method="POST" class="search" id="search">
                         @csrf
                         <input 
                             type="search" 
@@ -24,7 +24,7 @@
                             placeholder="Search..."
                         >
                     </form>
-                    <form action="" method="POST" id="clear">
+                    <form action="courses" method="GET" id="clear">
                         @csrf
                     </form>
                     <div class="button-container">

@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/courses', function () {
         return view('/courses/courses');
     })->name('courses'); 
+    Route::post('/courses', [CourseController::class, 'searchCourses'])->name('courses');
     Route::get('/courses-add', [CourseController::class, 'viewAdd']);
     Route::post('/courses-add', [CourseController::class, 'addCourse']);
     Route::post('/delete-course', [CourseController::class, 'deleteCourseById']);

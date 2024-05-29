@@ -94,4 +94,22 @@ class CourseController extends Controller
         return redirect()->route('assignments');
     }
 
+    public function searchCourses(Request $request) {
+        $searchTerm = $request->input('search');
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $courses = Course::where('user_id', $user_id)
+            ->where(function ($query) use ($searchTerm) {
+                $query->where('name', 'LIKE', '%' . $searchTerm . '%')
+                      ->orWhere('code', 'LIKE', '%' . $searchTerm . '%');
+            })
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return view('courses/courses', [
+            'courses' => $courses
+        ]);
+    }
+
 }
