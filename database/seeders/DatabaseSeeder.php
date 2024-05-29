@@ -165,7 +165,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
-                'title' => 'Section 2',
+                'title' => 'Section 1',
                 'marks_allocated' => 50,
                 'assessment_id' => DB::table('assessments')->where('title', 'Final Exam')->first()->id,
             ],
@@ -190,7 +190,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'name' => "Section 1",
-                'marks_attained' => 50,
+                'marks_attained' => 45,
                 'grade_id' => DB::table('grades')->where('marks_attained', 90)->first()->id,
                 'section_id' => DB::table('sections')->where('title', 'Section 2')->first()->id,
             ],

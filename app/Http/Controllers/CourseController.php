@@ -27,7 +27,7 @@ class CourseController extends Controller
     }
 
     public function get_course($course_id) {
-        return Course::where("id", $course_id)->get()[0];
+        return Course::where("id", $course_id)->get()->first();
     }
 
     public function addCourse(Request $request)

@@ -163,7 +163,12 @@ class GroupController extends Controller
 
 
         $assessments = (new AssessmentController)->getAssessmentByCourseId($course_id);
+
+        
         $course = (new CourseController)->get_course($course_id);
+        if (!$course) {
+            $course = $courses[0];
+        }
         
         return view(
             'groups/group-reports',
