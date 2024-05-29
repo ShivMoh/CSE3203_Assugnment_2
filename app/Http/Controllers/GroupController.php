@@ -161,6 +161,7 @@ class GroupController extends Controller
             
         }
 
+
         $assessments = (new AssessmentController)->getAssessmentByCourseId($course_id);
         $course = (new CourseController)->get_course($course_id);
         
