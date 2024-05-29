@@ -73,6 +73,27 @@ Route::middleware(['auth'])->group(function () {
     
     Route::post('/delete-course', [CourseController::class, 'deleteCourseById']);
     Route::post('/view', [CourseController::class, 'viewAssignments']);
+
+    Route::get('/courses', [CourseController::class, 'get_all_courses'])->name('courses');
+
+    Route::get('/group-reports', [GroupController::class, 'view_groups'])->name('group-reports');
+    Route::post('/group-reports', [GroupController::class, 'view_groups'])->name('group-reports');
+    Route::post('/delete-group', [GroupController::class, 'delete_group'])->name('delete-group');
+
+    Route::middleware('clear.edit.grades')->group(function () {
+        Route::post('/edit-grades', [GradeController::class, 'edit_grades'])->name('edit-grades');
+        Route::get('/edit-grades', [GradeController::class, 'edit_grades'])->name('edit-grades');
+    });
+    Route::post('/update-grades', [GradeController::class, 'update_grades'])->name('update-grades');
+    Route::post('/update-comment', [GradeController::class, 'update_comment'])->name('update-comment');
+    Route::post('/import-grades', [GradeController::class, 'import_grades'])->name('import-grades');
+    Route::view('/file', 'groups/test');
+
+    Route::post('/export_grades', [GradeController::class, 'export_grades'])->name('export_grades');
+
+    Route::get('/courses-add', function () {
+        return view('/courses/courses-add');
+    });
 });
 
 
@@ -82,23 +103,4 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 
-Route::get('/courses', [CourseController::class, 'get_all_courses'])->name('courses');
 
-Route::get('/group-reports', [GroupController::class, 'view_groups'])->name('group-reports');
-Route::post('/group-reports', [GroupController::class, 'view_groups'])->name('group-reports');
-Route::post('/delete-group', [GroupController::class, 'delete_group'])->name('delete-group');
-
-Route::middleware('clear.edit.grades')->group(function () {
-    Route::post('/edit-grades', [GradeController::class, 'edit_grades'])->name('edit-grades');
-    Route::get('/edit-grades', [GradeController::class, 'edit_grades'])->name('edit-grades');
-});
-Route::post('/update-grades', [GradeController::class, 'update_grades'])->name('update-grades');
-Route::post('/update-comment', [GradeController::class, 'update_comment'])->name('update-comment');
-Route::post('/import-grades', [GradeController::class, 'import_grades'])->name('import-grades');
-Route::view('/file', 'groups/test');
-
-Route::post('/export_grades', [GradeController::class, 'export_grades'])->name('export_grades');
-
-Route::get('/courses-add', function () {
-    return view('/courses/courses-add');
-});
