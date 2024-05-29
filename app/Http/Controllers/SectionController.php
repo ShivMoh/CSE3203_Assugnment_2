@@ -96,6 +96,16 @@ class SectionController extends Controller
         return Section::where('assessment_id', $id)->get();
     }
 
+    public function createSection($title, $marks_allocated, $assessment_id) {
+        Section::create([
+            'id' => Str::uuid(),
+            'title' => $title,
+            'marks_allocated' => $marks_allocated,
+            'assessment_id'=>$assessment_id
+        ]);
+    }
+    }
+
     private function getSectionById($id){
         return Section::where('id', $id)->first();
     }

@@ -179,6 +179,74 @@ class AssessmentController extends Controller
         return redirect()->route('assessment-details');
     }
 
+    public function import_assessment_structure(Request $request) {
+
+        // for reading back in previously 
+        // requires assessment id --> 
+            // could get that from using one of the students usi
+            // since the same student cannot be in one or more grps per assessment
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|mimes:xls,xlsx',
+            'assessment_id' => 'required | string'
+        ]);
+
+        if($validator->fails()) {
+            return redirect()->route('edit-grades')->withErrors($validator)->withInput();
+        }
+
+        $assessment_id = $request->input('assessment_id');
+        
+        $excel_data = Excel::toArray([], $request->file('file'));
+        
+        $headings = $excel_data[0][1];
+
+        $total_index = count($headings) - 4;
+        $percentage_index = count($headings) - 3;
+        $contribution_award_index = count($headings) - 2;
+        $comment_index = count($headings) - 1;
+        $sections_start_index = 4;
+        $sections_end_index = count($headings) - 4 - 5;
+
+        $sections = array_slice(
+            $headings,
+            $sections_start_index,
+            $sections_end_index + 1
+        );  
+
+        $assessment = (new AssessmentController)->getAssessmentById($assessment_id);
+
+        DB::beginTransaction();
+        
+        try {
+            
+            foreach($sections as $section) {
+                $sect = explode("-", $section);
+                $section_name = $sect[0];
+                $section_marks_allocated = $sect[1];
+
+                (new SectionController)->createSection($section_name, $section_marks_allocated, $assessment_id);
+            }
+
+            $total = explode("-", $heading[$total_index])[0];
+            $assessment->total_marks = $total;
+
+            $percentage = explode("-", $heading[$percentage_index])[0];
+            $assessment->course_weight = $percentage / 100;
+
+            $assessment->save();
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            redirect()->back()->withInput()->withErrors(['structure_error' => 'Excel data structure is not supported']);
+        }
+        
+
+        return redirect()->back()->withInput();
+    }
+
 
 
     /* Getters */
