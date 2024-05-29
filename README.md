@@ -57,4 +57,5 @@ providers' => [
 ]
 ```
 
+For instructions on how to set up Laravel consult this [readme](https://github.com/ShivMoh/Tempus_Fugit_CSE3203_Project/blob/main/README.md).
 For more details, visit the [official PHP documentation](https://www.php.net/manual/en/install.pecl.windows.php).
