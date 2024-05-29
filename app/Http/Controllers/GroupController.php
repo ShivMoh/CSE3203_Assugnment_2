@@ -169,7 +169,7 @@ class GroupController extends Controller
         if (!$course) {
             $course = $courses[0];
         }
-        
+
         return view(
             'groups/group-reports',
             [
