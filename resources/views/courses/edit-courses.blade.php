@@ -14,7 +14,7 @@
                 <input type="string" id="code" name="code" value="{{ $course->code }}" required>
             </div>
             <div class="button-container">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="save-btn">Save</button>
             </div>
         </form>
     </div>

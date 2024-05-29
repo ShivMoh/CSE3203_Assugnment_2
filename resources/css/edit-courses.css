@@ -77,3 +77,19 @@ button:hover {
 .course-add-form .form-group select {
     text-align: left;
 }
+
+.save-btn {
+    height: 45px;
+    background-color: #6A4200;
+    
+    color: white;
+    text-transform: uppercase;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px;
+    
+    border: none;
+    border-radius: 30px;
+    padding: 8px 24px;
+    
+    box-shadow: 0 0 45px 3px rgba(0, 0, 0, 0.25);
+}

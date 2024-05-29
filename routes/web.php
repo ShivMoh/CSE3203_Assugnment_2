@@ -9,9 +9,6 @@ use App\Http\Controllers\CourseController;
 
 use App\Http\Controllers\AuthController;
 
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -95,12 +92,4 @@ Route::middleware(['auth'])->group(function () {
         return view('/courses/courses-add');
     });
 });
-
-
-Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [AuthController::class, 'register']);
-
-Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('login', [AuthController::class, 'login']);
-
 
