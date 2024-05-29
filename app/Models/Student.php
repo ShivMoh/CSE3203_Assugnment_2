@@ -11,7 +11,7 @@ class Student extends Model
 
     public $table = 'students';
     public $timestamps = true;
-
+    public $incrementing = false;
     protected $fillable = [
         'id',
         'first_name',

@@ -14,6 +14,7 @@ class GradeSection extends Model
 
     protected $fillable = [
         'id',
+        'name',
         'marks_attained',
         'grade_id',
         'section_id'
@@ -21,6 +22,7 @@ class GradeSection extends Model
 
     protected $casts = [
         'id' => 'string',
+        'name' => 'string',
         'marks_attained' => 'float',
         'grade_id' => 'string',
         'section_id'=> 'string'

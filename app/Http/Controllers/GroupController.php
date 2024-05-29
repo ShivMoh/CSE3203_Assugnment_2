@@ -18,6 +18,7 @@ use App\Models\Assessment;
 use App\Models\Comment;
 use App\Models\Section;
 use App\Models\Course;
+use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\ExcelServiceProvider;
 use App\Http\Controllers\StudentController;
 
@@ -25,7 +26,88 @@ use App\Http\Controllers\StudentController;
 
 class GroupController extends Controller
 {
-  
+
+
+    public function import(Request $request)
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'group_report' => 'required|mimes:xls,xlsx'
+        ]);
+
+        // Load the file into an array
+        $data = Excel::toArray([], $request->file('group_report'));
+
+        // Get the first sheet's data
+        $sheetData = $data[0];
+
+        // Extract the headers (first row)
+        $headers = array_shift($sheetData);
+
+        // Retrieve the assessment ID from the session
+        $assessmentId = Session::get('assessment_id');
+
+        // Create a new grade for the student with the retrieved assessment ID
+        $grade = Grade::create([
+            'id' => Str::uuid(),
+            'marks_attained' => 0, // Initialize to 0
+            'letter_grade' => '', // Initialize to empty
+            'assessment_id' => $assessmentId // Set to the retrieved assessment ID
+        ]);
+
+
+        // Create a new group
+        $group = Group::create([
+            'id' => Str::uuid(), // Generate a unique ID for the group
+            'name' => 'New Group', // You can customize the group name as needed
+            'grade_id' => $grade->id// Set to null or use an appropriate value if necessary
+        ]);
+
+        // Process each row in the sheet
+        foreach ($sheetData as $row) {
+            // Assuming the columns are in the order: last name, first name, usi, award
+            $lastName = $row[0];
+            $firstName = $row[1];
+            $usi = $row[2];
+            $award = $row[3];
+
+            // Find or create the student
+            $student = Student::create(
+                ['id' => Str::uuid(),'usi' => $usi, 'first_name' => $firstName, 'last_name' => $lastName]
+            );
+
+            // Create the contribution for the student
+            Contribution::create([
+                'id' => Str::uuid(),
+                'percentage' => $award, // Assuming 'award' corresponds to 'percentage'
+                'group_id' => $group->id,
+                'student_id' => $student->id
+            ]);
+
+            // Create an empty comment for the student
+            Comment::create([
+                'id' => Str::uuid(),
+                'comment' => '',
+                'grade_id' => $grade->id // Set to appropriate value if necessary
+            ]);
+
+            // Retrieve all sections related to the assessment_id
+            $sections = Section::where('assessment_id', $assessmentId)->get();
+
+            // Loop through each section and create a new grade section
+            foreach ($sections as $section) {
+                GradeSection::create([
+                    'id' => Str::uuid(),
+                    'name'=>$section->title,
+                    'marks_attained' => 0,
+                    'grade_id' => $grade->id, // Assuming $grade is already defined
+                    'section_id' => $section->id
+                ]);
+            }
+        }
+
+        return redirect()->route('group-reports')->with('success', 'Group and contributions created successfully.');
+    }
 
     public function view_groups(Request $request) {
 
@@ -75,13 +157,26 @@ class GroupController extends Controller
         } else {
             $courses = (new CourseController)->retrieve_all_courses();
             $course_id = $request->input('courses');
-            session('course')['course_id'] = $course_id;
-            
+            // session('course')['course_id'] = $course_id;
+            session()->put('course', [
+                'course_id' => $course_id
+            ]);
+
         }
 
         $assessments = (new AssessmentController)->getAssessmentByCourseId($course_id);
-        $course = (new CourseController)->get_course($course_id);
         
+        $course = (new CourseController)->get_course($course_id);
+
+        if (!$course) {
+            $course = $courses[0];
+            //session('course')['course_id'] = $course->id;
+            session()->put('course', [
+                'course_id' => $course->id
+            ]);
+        } 
+      
+
         return view(
             'groups/group-reports',
             [

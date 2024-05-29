@@ -147,7 +147,7 @@ class GradeController extends Controller
         $model->save();
         return;
     }
-    
+
     public function import_grades(Request $request) {
 
         // for reading back in previously 

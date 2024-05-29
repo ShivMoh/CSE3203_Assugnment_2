@@ -73,6 +73,7 @@
     
     </section>
     <h2 class="info">Currently showing groups for <strong>Assessment:</strong> {{$a == null ? 'All' : $a->title}} belonging to <strong>Course:</strong> {{$c->name}}</h2>
+ 
     @foreach ($groups as $index => $group)
     
         @php
