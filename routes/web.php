@@ -50,6 +50,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/assignment-add', [AssessmentController::class, 'viewAdd']);
     Route::post('/assignment-add', [AssessmentController::class, 'addAssessment']);
+    Route::post('/assignment-upload', [AssessmentController::class, 'import_assessment_structure']);
+
     Route::get('/assignment-update', [AssessmentController::class, 'viewUpdate']);
     Route::post('/assignment-update', [AssessmentController::class, 'updateAssessment']);
     Route::get('/assignment-section-add', [AssessmentController::class, 'addSection']);

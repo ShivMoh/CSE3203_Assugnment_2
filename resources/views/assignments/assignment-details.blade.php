@@ -36,10 +36,20 @@
                 <h1>Breakdown</h1>
                 <div class="sections">
                     <h2>Sections</h2>
-                    
-                    <button type="submit" class="ghost-btn" id="toggle-section">
-                        <i class="fa-solid fa-plus"></i>                       
-                    </button>
+                    <div class="container" style="display:flex;">
+                        <form action="/assignment-upload" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="file" name="assignment-structure" id="file-input" accept=".xlsx" required>
+                            <button type="button" id="upload-button" class="add-more">
+                                Upload Assessment Structure
+                            </button>
+                            <button type="submit" id="submit-button" style="display: none;">Submit</button>
+                        </form>
+                        
+                        <button type="submit" class="ghost-btn" id="toggle-section">
+                            <i class="fa-solid fa-plus"></i>                       
+                        </button>
+                    </div>
                 </div> 
             </div>
 

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\Assessment;
 use App\Models\Category;
@@ -187,17 +190,16 @@ class AssessmentController extends Controller
             // since the same student cannot be in one or more grps per assessment
 
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:xls,xlsx',
-            'assessment_id' => 'required | string'
+            'assignment-structure' => 'required|mimes:xls,xlsx',
         ]);
 
         if($validator->fails()) {
             return redirect()->route('edit-grades')->withErrors($validator)->withInput();
         }
 
-        $assessment_id = $request->input('assessment_id');
+        $assessment= $this->getCurrentAssessment();
         
-        $excel_data = Excel::toArray([], $request->file('file'));
+        $excel_data = Excel::toArray([], $request->file('assignment-structure'));
         
         $headings = $excel_data[0][1];
 
@@ -214,7 +216,6 @@ class AssessmentController extends Controller
             $sections_end_index + 1
         );  
 
-        $assessment = (new AssessmentController)->getAssessmentById($assessment_id);
 
         DB::beginTransaction();
 
@@ -225,13 +226,13 @@ class AssessmentController extends Controller
                 $section_name = $sect[0];
                 $section_marks_allocated = $sect[1];
 
-                (new SectionController)->createSection($section_name, $section_marks_allocated, $assessment_id);
+                (new SectionController)->createSection($section_name, $section_marks_allocated, $assessment->id);
             }
 
-            $total = explode("-", $heading[$total_index])[1];
+            $total = explode("-", $headings[$total_index])[1];
             $assessment->total_marks = $total;
 
-            $percentage = explode("-", $heading[$percentage_index])[1];
+            $percentage = explode("-", $headings[$percentage_index])[1];
             $assessment->course_weight = $percentage / 100;
 
             $assessment->save();
