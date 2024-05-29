@@ -107,7 +107,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
-                'marks_attained' => 100,
+                'marks_attained' => 90,
                 'letter_grade' => 'A',
                 'assessment_id' => DB::table('assessments')->where('title', 'Final Exam')->first()->id,
             ],
@@ -123,7 +123,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'name' => 'Group B',
-                'grade_id' => DB::table('grades')->where('marks_attained', 100)->first()->id,
+                'grade_id' => DB::table('grades')->where('marks_attained', 90)->first()->id,
             ],
         ]);
 
@@ -191,7 +191,7 @@ class DatabaseSeeder extends Seeder
                 'id' => Str::uuid(),
                 'name' => "Section 1",
                 'marks_attained' => 50,
-                'grade_id' => DB::table('grades')->where('marks_attained', 100)->first()->id,
+                'grade_id' => DB::table('grades')->where('marks_attained', 90)->first()->id,
                 'section_id' => DB::table('sections')->where('title', 'Section 2')->first()->id,
             ],
         ]);
@@ -206,7 +206,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'comment' => 'Excellent work!',
-                'grade_id' => DB::table('grades')->where('marks_attained', 100)->first()->id,
+                'grade_id' => DB::table('grades')->where('marks_attained', 90)->first()->id,
             ],
         ]);
     }
