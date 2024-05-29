@@ -88,7 +88,7 @@
 
                 <!-- Add Group Project Reports to this assignment -->
 
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="/import-new-group" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="file" name="group_report" id="file-input" accept=".xlsx" required>
                     <button type="button" id="upload-button" class="add-more">

@@ -56,14 +56,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/assignment-section-add', [AssessmentController::class, 'addSection']);
     Route::post('/delete-assignment', [AssessmentController::class, 'deleteAssessmentById']);
     Route::post('/delete-section', [SectionController::class, 'deleteSectionById']);
+    Route::post('/import-new-group', [GroupController::class, 'import']);
     
 
     Route::get('/courses', function () {
         return view('/courses/courses');
     })->name('courses'); 
     Route::post('/courses', [CourseController::class, 'searchCourses'])->name('courses');
-    Route::get('/courses-add', [CourseController::class, 'viewAdd']);
+
     Route::post('/courses-add', [CourseController::class, 'addCourse']);
+    
     Route::post('/delete-course', [CourseController::class, 'deleteCourseById']);
     Route::post('/view', [CourseController::class, 'viewAssignments']);
 });
