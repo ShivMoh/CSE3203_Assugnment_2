@@ -34,9 +34,12 @@
                         <label for="assessments">Filter by assessments</label>
                         <select name="assessments" id="assessments" class="filter-select" onchange="this.form.submit()">
                             <option value="" selected>All</option>
+                            @if ($has_data)
                             @foreach ($assessments as $assessment)
                                 <option value="{{$assessment->id}}">{{$assessment->title}}</option>
-                            @endforeach
+                            @endforeach    
+                            @endif
+                            
                         </select>
                     </div>
                     
@@ -48,9 +51,11 @@
                         <label for="courses">Filter by course</label>
                         <select name="courses" id="courses" class="filter-select" onchange="this.form.submit()">
                             <option value="" selected>All</option>
+                           @if($has_data)
                             @foreach ($courses as $course)
                                 <option value="{{$course->id}}">{{$course->name}}</option>
                             @endforeach
+                            @endif
                         </select>
                     </div>
                     
