@@ -91,19 +91,20 @@ class GroupController extends Controller
                 'grade_id' => $grade->id // Set to appropriate value if necessary
             ]);
 
-            // Retrieve all sections related to the assessment_id
-            $sections = Section::where('assessment_id', $assessmentId)->get();
+            
+        }
+        // Retrieve all sections related to the assessment_id
+        $sections = Section::where('assessment_id', $assessmentId)->get();
 
-            // Loop through each section and create a new grade section
-            foreach ($sections as $section) {
-                GradeSection::create([
-                    'id' => Str::uuid(),
-                    'name'=>$section->title,
-                    'marks_attained' => 0,
-                    'grade_id' => $grade->id, // Assuming $grade is already defined
-                    'section_id' => $section->id
-                ]);
-            }
+        // Loop through each section and create a new grade section
+        foreach ($sections as $section) {
+            GradeSection::create([
+                'id' => Str::uuid(),
+                'name'=>$section->title,
+                'marks_attained' => 0,
+                'grade_id' => $grade->id, // Assuming $grade is already defined
+                'section_id' => $section->id
+            ]);
         }
 
         return redirect()->route('group-reports')->with('success', 'Group and contributions created successfully.');
