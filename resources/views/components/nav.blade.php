@@ -8,7 +8,7 @@
             <a href="/group-reports" class="nav-link">Groups</a>
         </div>
         <div class="nav-content">
-            <a href="/assignments" class="nav-link">Assignments</a>
+            <a href="/assignments" class="nav-link"><i>All</i> Assignments</a>
         </div>
     </div>
     <div class="logout">
