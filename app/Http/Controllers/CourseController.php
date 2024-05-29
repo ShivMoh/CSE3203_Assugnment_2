@@ -112,4 +112,45 @@ class CourseController extends Controller
         ]);
     }
 
+    public function editCourseName(Request $request)
+    {
+        $course = $this->getCourseById($request->input('course_id'));
+
+        if (!$course) {
+            return redirect()->back()->with('error', 'Course not found.');
+        }
+
+        if ($request->isMethod('post')) {
+            $request->validate([
+                'name' => 'required|string',
+                'code' => 'required|string'
+            ]);
+
+            $course->name = $request->input('name');
+            $course->code = $request->input('code');
+            $course->save();
+
+            return redirect()->intended('/courses')->with('success', 'Course updated successfully.');
+        }
+
+        return view('courses/edit-courses');
+    }
+
+    public function viewCourseEditPage(Request $request)
+    {
+        $request->validate([
+            'course_id' => 'required'
+        ]);
+
+        $course = $this->getCourseById($request->input('course_id'));
+
+        if (!$course) {
+            return redirect()->back()->with('error', 'Course not found.');
+        }
+
+        return view('courses/edit-courses', [
+            'course' => $course
+        ]);
+    }
+
 }

@@ -56,6 +56,8 @@
                                 <div class="course-code"><strong>Course code:</strong> {{$course->code}}</div>
                             </div>
                         </div>
+                        <div class="course-arrow">
+                        </div>
                         <div class="form-btns">
                             <div class="course-arrow">
                                 <form action="/delete-course" method="POST">
@@ -66,7 +68,13 @@
                                         <i class="fa fa-solid fa-lg fa-x"></i>
                                     </button>
                                 </form>
-                            </div>    
+                            </div>
+                            <form action="edit-courses" method="GET">
+                                <input type="hidden" name="course_id" value="{{$course->id}}">
+                                <button type="submit" class="ghost-btn">
+                                    <i class="fa fa-solid fa-marker"></i>
+                                </button>
+                            </form>    
                             <form action="/view" method="post">
                                 @csrf
                                 <input type="hidden" name="course_id" value="{{$course->id}}">

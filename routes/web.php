@@ -64,6 +64,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/courses', [CourseController::class, 'searchCourses'])->name('courses');
     Route::get('/courses-add', [CourseController::class, 'viewAdd']);
     Route::post('/courses-add', [CourseController::class, 'addCourse']);
+    Route::get('/edit-courses', [CourseController::class, 'viewCourseEditPage']);
+    // Route::post('/edit-courses', [CourseController::class, 'editCourseName'])->name('courses.edit');
+    Route::post('/edit-courses', [CourseController::class, 'editCourseName'])->name('edit-courses');
     Route::post('/delete-course', [CourseController::class, 'deleteCourseById']);
     Route::post('/view', [CourseController::class, 'viewAssignments']);
 });
