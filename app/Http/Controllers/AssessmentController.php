@@ -217,7 +217,7 @@ class AssessmentController extends Controller
         $assessment = (new AssessmentController)->getAssessmentById($assessment_id);
 
         DB::beginTransaction();
-        
+
         try {
             
             foreach($sections as $section) {
@@ -228,10 +228,10 @@ class AssessmentController extends Controller
                 (new SectionController)->createSection($section_name, $section_marks_allocated, $assessment_id);
             }
 
-            $total = explode("-", $heading[$total_index])[0];
+            $total = explode("-", $heading[$total_index])[1];
             $assessment->total_marks = $total;
 
-            $percentage = explode("-", $heading[$percentage_index])[0];
+            $percentage = explode("-", $heading[$percentage_index])[1];
             $assessment->course_weight = $percentage / 100;
 
             $assessment->save();
