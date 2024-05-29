@@ -241,7 +241,7 @@ class AssessmentController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollBack();
-            redirect()->back()->withInput()->withErrors(['structure_error' => 'Excel data structure is not supported']);
+            redirect()->back()->withInput()->withErrors(['structure_error' => 'Excel Sheet incorrectly formatted.']);
         }
         
 

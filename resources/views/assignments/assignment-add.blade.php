@@ -47,7 +47,8 @@
                 <div class="form-group">
                     <label for="weight">Course Weight:</label>
                     <input 
-                    type="number" 
+                    type="text"
+                    placeholder="e.g. 0.2"
                     name="weight" 
                     id="weight" 
                     required>

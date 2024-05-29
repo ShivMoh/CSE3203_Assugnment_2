@@ -37,7 +37,7 @@ class GroupController extends Controller
 
         // Load the file into an array
         $data = Excel::toArray([], $request->file('group_report'));
-
+        $file = $request->file('group_report');
         // Get the first sheet's data
         $sheetData = $data[0];
 
@@ -59,7 +59,7 @@ class GroupController extends Controller
         // Create a new group
         $group = Group::create([
             'id' => Str::uuid(), // Generate a unique ID for the group
-            'name' => 'New Group', // You can customize the group name as needed
+            'name' => $file->getClientOriginalName(), // You can customize the group name as needed
             'grade_id' => $grade->id// Set to null or use an appropriate value if necessary
         ]);
 

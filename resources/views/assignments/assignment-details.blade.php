@@ -100,11 +100,11 @@
 
                 <form action="/import-new-group" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="file" name="group_report" id="file-input" accept=".xlsx" required>
-                    <button type="button" id="upload-button" class="add-more">
+                    <input type="file" name="group_report" id="file-input1" accept=".xlsx" required class="hidden">
+                    <button type="button" id="upload-button1" class="add-more">
                         Upload Group Reports
                     </button>
-                    <button type="submit" id="submit-button" style="display: none;">Submit</button>
+                    <button type="submit" id="submit-button1" style="display: none;">Submit</button>
                 </form>
 
                 <form  action="/group-reports" method="get">
@@ -124,6 +124,14 @@
 
         document.getElementById('file-input').addEventListener('change', function() {
             document.getElementById('submit-button').click();
+        });
+
+        document.getElementById('upload-button1').addEventListener('click', function() {
+            document.getElementById('file-input1').click();
+        });
+
+        document.getElementById('file-input1').addEventListener('change', function() {
+            document.getElementById('submit-button1').click();
         });
 
         document.addEventListener("DOMContentLoaded", function() {
