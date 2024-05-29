@@ -72,17 +72,21 @@
         </div>
     
     </section>
-    <h2 class="info">Currently showing groups for <strong>Assessment:</strong> {{$a == null ? 'All' : $a->title}} belonging to <strong>Course:</strong> {{$c->name}}</h2>
- 
-    @foreach ($groups as $index => $group)
+
+    @if ($has_data)
+        <h2 class="info">Currently showing groups for <strong>Assessment:</strong> {{$a == null ? 'All' : $a->title}} belonging to <strong>Course:</strong> {{$c->name}}</h2>
     
-        @php
+        @foreach ($groups as $index => $group)
         
-            $students = $student_data[$index]; 
-        @endphp
-    
-    
-        <x-group-preview :students="$students" :group="$group" :index="$index" ></x-group-preview>
-    @endforeach
+            @php
+            
+                $students = $student_data[$index]; 
+            @endphp
+        
+        
+            <x-group-preview :students="$students" :group="$group" :index="$index" ></x-group-preview>
+        @endforeach
+    @endif
+
 </div>
 

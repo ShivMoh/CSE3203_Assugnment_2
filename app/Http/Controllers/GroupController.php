@@ -139,10 +139,22 @@ class GroupController extends Controller
     
         $courses = array();
         $course_id = "";
+
+        $courses = (new CourseController)->retrieve_all_courses();
+
+        if (count($courses) <= 0 || count($groups) <= 0) {
+            return view(
+                'groups/group-reports',
+                [
+                    'has_data' => false
+                ]
+            );
+        }
+
         if(empty($request->input('courses'))) {
          
             // we'll take the first retrieved course as the default
-            $courses = (new CourseController)->retrieve_all_courses();
+           
             $course_id = $courses[0]->id;
             
             if (!Session::has("course")) {
@@ -156,7 +168,7 @@ class GroupController extends Controller
             }
             
         } else {
-            $courses = (new CourseController)->retrieve_all_courses();
+           
             $course_id = $request->input('courses');
             // session('course')['course_id'] = $course_id;
             session()->put('course', [
@@ -181,6 +193,7 @@ class GroupController extends Controller
         return view(
             'groups/group-reports',
             [
+                'has_data'=>true,
                 'groups' => $groups,
                 'student_data'=>$student_data,
                 'assessments'=>$assessments,
