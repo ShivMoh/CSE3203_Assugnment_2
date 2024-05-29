@@ -233,7 +233,7 @@ class AssessmentController extends Controller
             $assessment->total_marks = $total;
 
             $percentage = explode("-", $headings[$percentage_index])[1];
-            $assessment->course_weight = $percentage / 100;
+            $assessment->course_weight = ((float) $percentage / 100);
 
             $assessment->save();
 
